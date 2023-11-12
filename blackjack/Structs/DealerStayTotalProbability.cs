@@ -17,10 +17,9 @@ public record DealerStayTotalProbability
         Probability p21,
         Probability pBust)
     {
-        Probability total = p17 + p18 + p19 + p20 + p21 + pBust;
-        if ((total) != One)
+        if (p17.IsNegative() || p18.IsNegative() || p19.IsNegative() || p20.IsNegative() || p21.IsNegative() || pBust.IsNegative())
         {
-            throw new ArgumentException($"Probabilities don't add up to one P17={p17} P18={p18} P19={p19} P20={p20} P21={p21} PBust={pBust} Total={total}");
+            throw new ArgumentException($"Probabilities can't be negative P17={p17} P18={p18} P19={p19} P20={p20} P21={p21} PBust={pBust}");
         }
 
         P17 = p17; 

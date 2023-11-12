@@ -24,7 +24,7 @@ public class Table
         _dictionary.Add(17, new(One, Zero, Zero, Zero, Zero, Zero));
 
         // possible increases to a hand's total is 1..10
-        for (int startingHand = 16; startingHand >= 5;  startingHand--)
+        for (int startingHand = 16; startingHand >= 2;  startingHand--)
         {
             Probability p17 = Zero;
             Probability p18 = Zero;
