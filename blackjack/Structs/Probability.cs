@@ -1,33 +1,28 @@
 ﻿namespace blackjack.Structs;
 
-public record Probability(int Numerator, int Denominator)
+public record Probability(ulong Numerator, ulong Denominator)
 {
-    public decimal ToDecimal()
-    {
-        return (decimal)Numerator / Denominator;
-    }
-
     public static Probability operator *(Probability a, Probability b)
     {
         return new(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
     }
     public static Probability operator +(Probability a, Probability b)
     {
-        int commonDenominator = a.Denominator * b.Denominator;
+        ulong commonDenominator = a.Denominator * b.Denominator;
 
         // Calculate the numerators for the common denominator
-        int newNumerator1 = a.Numerator * b.Denominator;
-        int newNumerator2 = b.Numerator * a.Denominator;
+        ulong newNumerator1 = a.Numerator * b.Denominator;
+        ulong newNumerator2 = b.Numerator * a.Denominator;
 
         // Add the numerators
-        int sumOfNumerators = newNumerator1 + newNumerator2;
+        ulong sumOfNumerators = newNumerator1 + newNumerator2;
 
         // Simplify the result by finding the greatest common divisor (GCD)
-        int gcd = FindGCD(sumOfNumerators, commonDenominator);
+        ulong gcd = FindGCD(sumOfNumerators, commonDenominator);
 
         // Divide both the numerator and denominator by the GCD
-        int resultNumerator = sumOfNumerators / gcd;
-        int resultDenominator = commonDenominator / gcd;
+        ulong resultNumerator = sumOfNumerators / gcd;
+        ulong resultDenominator = commonDenominator / gcd;
 
         return new(resultNumerator, resultDenominator);
     }
@@ -39,14 +34,16 @@ public record Probability(int Numerator, int Denominator)
 
     public override string ToString()
     {
+        //double result = (double)Numerator / Denominator * 100;
+        //return $"{result.ToString("0.00")}%";
         return $"{Numerator}/{Denominator}";
     }
 
-    private static int FindGCD(int a, int b)
+    private static ulong FindGCD(ulong a, ulong b)
     {
         while (b != 0)
         {
-            int temp = b;
+            ulong temp = b;
             b = a % b;
             a = temp;
         }

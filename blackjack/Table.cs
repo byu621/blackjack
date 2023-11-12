@@ -23,30 +23,31 @@ public class Table
         _dictionary.Add(18, new(Zero, One, Zero, Zero, Zero, Zero));
         _dictionary.Add(17, new(One, Zero, Zero, Zero, Zero, Zero));
 
-        // possible increases to a hand's total is 1..11
-
-        int total = 16;
-        Probability p17 = Zero;
-        Probability p18 = Zero;
-        Probability p19 = Zero;
-        Probability p20 = Zero;
-        Probability p21 = Zero;
-        Probability pBust = Zero;
-        for (int hitCard = 1; hitCard <= 10; hitCard++)
+        // possible increases to a hand's total is 1..10
+        for (int startingHand = 16; startingHand >= 5;  startingHand--)
         {
-            int handTotal = total + hitCard;
-            Probability handTotalProbability = hitCard == 10 ? FourThirteenth : OneThirteenth;
+            Probability p17 = Zero;
+            Probability p18 = Zero;
+            Probability p19 = Zero;
+            Probability p20 = Zero;
+            Probability p21 = Zero;
+            Probability pBust = Zero;
+            for (int hitCard = 1; hitCard <= 10; hitCard++)
+            {
+                int handTotal = startingHand + hitCard;
+                Probability handTotalProbability = hitCard == 10 ? FourThirteenth : OneThirteenth;
 
-            p17 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P17 * handTotalProbability;
-            p18 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P18 * handTotalProbability;
-            p19 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P19 * handTotalProbability;
-            p20 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P20 * handTotalProbability;
-            p21 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P21 * handTotalProbability;
-            pBust += _dictionary.GetValueOrDefault(handTotal, OVER_21).PBust * handTotalProbability;
+                p17 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P17 * handTotalProbability;
+                p18 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P18 * handTotalProbability;
+                p19 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P19 * handTotalProbability;
+                p20 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P20 * handTotalProbability;
+                p21 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P21 * handTotalProbability;
+                pBust += _dictionary.GetValueOrDefault(handTotal, OVER_21).PBust * handTotalProbability;
+            }
+
+            _dictionary.Add(startingHand, new(p17, p18, p19, p20, p21, pBust));
+
+            Console.WriteLine($"{startingHand}: {_dictionary[startingHand]}");
         }
-
-        _dictionary.Add(total, new(p17, p18, p19, p20, p21, pBust));
-
-        Console.WriteLine(_dictionary[16]);
     }
 }
