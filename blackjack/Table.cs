@@ -12,14 +12,6 @@ namespace blackjack;
 public class Table
 {
     private readonly Dictionary<int, DealerStayTotalProbability> _dictionary = new();
-    private List<string> _headers = new List<string>()
-    {
-        "#", "17", "18", "19", "20", "21", "B"
-    };
-
-    public Table()
-    {
-    }
 
     public void Compute()
     {
@@ -52,30 +44,8 @@ public class Table
             }
 
             _dictionary.Add(startingHand, new(p17, p18, p19, p20, p21, pBust));
-
-            Console.WriteLine($"{startingHand}: {_dictionary[startingHand]}");
         }
     }
-
-    public string ToMarkdown()
-    {
-        string markdown = string.Empty;
-        markdown += "|";
-        foreach(string header in _headers)
-        {
-            markdown += $"{header}|";
-        }
-        markdown += "\n";
-        markdown += "|-|-|-|-|-|-|-|\n";
-
-        for (int total = 21; total >= 2; total--)
-        {
-            markdown += $"|{total}|{_dictionary[total].P17}|{_dictionary[total].P18}|{_dictionary[total].P19}|{_dictionary[total].P20}|{_dictionary[total].P21}|{_dictionary[total].PBust}\n";
-        }
-
-        return markdown;
-    }
-
     public void WriteToCsv()
     {
         using (var writer = new StreamWriter("data\\DealerStayTotalProbability.csv"))
