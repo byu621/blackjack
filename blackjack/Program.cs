@@ -7,6 +7,6 @@ internal class Program
         Console.WriteLine("Hello, World!");
         Table table = new();
         table.Compute();
-        Console.WriteLine(table.ToMarkdown());
+        table.WriteToCsv();
     }
 }

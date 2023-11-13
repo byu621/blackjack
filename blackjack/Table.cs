@@ -1,6 +1,8 @@
 ﻿using blackjack.Structs;
 using static blackjack.Structs.Probability;
 using static blackjack.Structs.DealerStayTotalProbability;
+using CsvHelper;
+using System.Globalization;
 
 namespace blackjack;
 
@@ -72,5 +74,18 @@ public class Table
         }
 
         return markdown;
+    }
+
+    public void WriteToCsv()
+    {
+        using (var writer = new StreamWriter("data\\DealerStayTotalProbability.csv"))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        {
+            for (int i = 21; i >= 2; i--)
+            {
+                csv.WriteRecord(_dictionary[i]);
+                csv.NextRecord();
+            }
+        }
     }
 }
