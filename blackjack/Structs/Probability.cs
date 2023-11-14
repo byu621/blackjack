@@ -1,7 +1,16 @@
-﻿namespace blackjack.Structs;
+﻿using CsvHelper.Configuration;
 
-public record Probability(decimal Value)
+namespace blackjack.Structs;
+
+public record Probability
 {
+    public decimal Value { get; }
+
+    public Probability(decimal value)
+    {
+        Value = value;
+    }
+
     public bool IsNegative()
     {
         return Value < 0;
@@ -28,3 +37,10 @@ public record Probability(decimal Value)
     }
 }
 
+public sealed class ProbabilityMap : ClassMap<Probability>
+{
+    public ProbabilityMap()
+    {
+        Map(m => m.Value).Name("A");
+    }
+}

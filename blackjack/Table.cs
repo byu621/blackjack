@@ -15,14 +15,14 @@ public class Table
 
     public void Compute()
     {
-        _dictionary.Add(21, new(Zero, Zero, Zero, Zero, One, Zero));
-        _dictionary.Add(20, new(Zero, Zero, Zero, One, Zero, Zero));
-        _dictionary.Add(19, new(Zero, Zero, One, Zero, Zero, Zero));
-        _dictionary.Add(18, new(Zero, One, Zero, Zero, Zero, Zero));
-        _dictionary.Add(17, new(One, Zero, Zero, Zero, Zero, Zero));
+        _dictionary.Add(21, new(21, Zero, Zero, Zero, Zero, One, Zero));
+        _dictionary.Add(20, new(20, Zero, Zero, Zero, One, Zero, Zero));
+        _dictionary.Add(19, new(19, Zero, Zero, One, Zero, Zero, Zero));
+        _dictionary.Add(18, new(18, Zero, One, Zero, Zero, Zero, Zero));
+        _dictionary.Add(17, new(17, One, Zero, Zero, Zero, Zero, Zero));
 
         // possible increases to a hand's total is 1..10
-        for (int startingHand = 16; startingHand >= 2;  startingHand--)
+        for (int startingHand = 16; startingHand >= 2; startingHand--)
         {
             Probability p17 = Zero;
             Probability p18 = Zero;
@@ -43,7 +43,7 @@ public class Table
                 pBust += _dictionary.GetValueOrDefault(handTotal, OVER_21).PBust * handTotalProbability;
             }
 
-            _dictionary.Add(startingHand, new(p17, p18, p19, p20, p21, pBust));
+            _dictionary.Add(startingHand, new(startingHand, p17, p18, p19, p20, p21, pBust));
         }
     }
     public void WriteToCsv()
@@ -51,11 +51,9 @@ public class Table
         using (var writer = new StreamWriter("data\\DealerStayTotalProbability.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            for (int i = 21; i >= 2; i--)
-            {
-                csv.WriteRecord(_dictionary[i]);
-                csv.NextRecord();
-            }
+            csv.Context.RegisterClassMap<ProbabilityMap>();
+            csv.Context.RegisterClassMap<DealerStayTotalProbabilityMap>();
+            csv.WriteRecords(_dictionary.Values);
         }
     }
 }
