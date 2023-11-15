@@ -1,6 +1,4 @@
-﻿using CsvHelper.Configuration;
-
-namespace blackjack.Structs;
+﻿namespace blackjack;
 
 public record Probability
 {

@@ -1,8 +1,7 @@
-﻿using blackjack.Structs;
-using static blackjack.Structs.Probability;
-using static blackjack.Structs.DealerTotalProbability;
-using CsvHelper;
+﻿using CsvHelper;
 using System.Globalization;
+using static blackjack.DealerTotalProbability;
+using static blackjack.Probability;
 
 namespace blackjack;
 
@@ -35,7 +34,7 @@ public class DealerTotalTable
                 int handTotal = startingHand + hitCard;
                 Probability handTotalProbability = hitCard == 10 ? FourThirteenth : OneThirteenth;
 
-                p17 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P17 * handTotalProbability;
+                p17 += _dictionary.GetValueOrDefault(handTotal, DealerTotalProbability.OVER_21).P17 * handTotalProbability;
                 p18 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P18 * handTotalProbability;
                 p19 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P19 * handTotalProbability;
                 p20 += _dictionary.GetValueOrDefault(handTotal, OVER_21).P20 * handTotalProbability;

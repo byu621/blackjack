@@ -1,9 +1,10 @@
 ﻿using CsvHelper.Configuration;
-using static blackjack.Structs.Probability;
+using static blackjack.Probability;
 
-namespace blackjack.Structs;
+namespace blackjack;
 public record DealerTotalProbability
 {
+    public HandType HandType { get; }
     public int DealerTotal { get; }
     public Probability P17 { get; }
     public Probability P18 { get; }
