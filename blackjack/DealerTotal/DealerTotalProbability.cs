@@ -1,11 +1,12 @@
 ﻿using CsvHelper.Configuration;
 using static blackjack.Probability;
 
+using static blackjack.HandType;
+
 namespace blackjack;
 public record DealerTotalProbability
 {
-    public HandType HandType { get; }
-    public int DealerTotal { get; }
+    public Hand Hand { get; }
     public Probability P17 { get; }
     public Probability P18 { get; }
     public Probability P19 { get; }
@@ -13,7 +14,7 @@ public record DealerTotalProbability
     public Probability P21 { get; }
     public Probability PBust { get; }
 
-    public DealerTotalProbability(int dealerTotal, Probability p17,
+    public DealerTotalProbability(Hand hand, Probability p17,
         Probability p18,
         Probability p19,
         Probability p20,
@@ -25,7 +26,7 @@ public record DealerTotalProbability
             throw new ArgumentException($"Probabilities can't be negative P17={p17} P18={p18} P19={p19} P20={p20} P21={p21} PBust={pBust}");
         }
 
-        DealerTotal = dealerTotal;
+        Hand = hand;
         P17 = p17;
         P18 = p18;
         P19 = p19;
@@ -34,14 +35,15 @@ public record DealerTotalProbability
         PBust = pBust;
     }
 
-    public static DealerTotalProbability OVER_21 = new DealerTotalProbability(22, Zero, Zero, Zero, Zero, Zero, One);
+    public static DealerTotalProbability HARD_22 = new DealerTotalProbability(new Hand(HARD, 22), Zero, Zero, Zero, Zero, Zero, One);
 }
 
 public sealed class DealerTotalProbabilityMap : ClassMap<DealerTotalProbability>
 {
     public DealerTotalProbabilityMap()
     {
-        Map(m => m.DealerTotal).Name("#");
+        Map(m => m.Hand.HandType).Name("Type");
+        Map(m => m.Hand.Total).Name("#");
         Map(m => m.P17);
         Map(m => m.P18);
         Map(m => m.P19);
