@@ -121,7 +121,8 @@ public class DealerTotalTable
         {
             csv.Context.RegisterClassMap<DealerTotalProbabilityMap>();
 
-            csv.WriteRecords(_dictionary.Values);
+            csv.WriteRecords(_dictionary.Values.Where(e => e.Hand.HandType == HandType.HARD));
+            csv.WriteRecords(_dictionary.Values.Where(e => e.Hand.HandType == HandType.SOFT));
         }
     }
 }
