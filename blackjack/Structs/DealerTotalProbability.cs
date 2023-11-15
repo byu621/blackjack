@@ -2,7 +2,7 @@
 using static blackjack.Structs.Probability;
 
 namespace blackjack.Structs;
-public record DealerStayTotalProbability
+public record DealerTotalProbability
 {
     public int DealerTotal { get; }
     public Probability P17 { get; }
@@ -12,7 +12,7 @@ public record DealerStayTotalProbability
     public Probability P21 { get; }
     public Probability PBust { get; }
 
-    public DealerStayTotalProbability(int dealerTotal, Probability p17,
+    public DealerTotalProbability(int dealerTotal, Probability p17,
         Probability p18,
         Probability p19,
         Probability p20,
@@ -33,12 +33,12 @@ public record DealerStayTotalProbability
         PBust = pBust;
     }
 
-    public static DealerStayTotalProbability OVER_21 = new DealerStayTotalProbability(22, Zero, Zero, Zero, Zero, Zero, One);
+    public static DealerTotalProbability OVER_21 = new DealerTotalProbability(22, Zero, Zero, Zero, Zero, Zero, One);
 }
 
-public sealed class DealerStayTotalProbabilityMap : ClassMap<DealerStayTotalProbability>
+public sealed class DealerTotalProbabilityMap : ClassMap<DealerTotalProbability>
 {
-    public DealerStayTotalProbabilityMap()
+    public DealerTotalProbabilityMap()
     {
         Map(m => m.DealerTotal).Name("#");
         Map(m => m.P17);

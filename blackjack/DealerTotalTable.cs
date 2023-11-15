@@ -1,6 +1,6 @@
 ﻿using blackjack.Structs;
 using static blackjack.Structs.Probability;
-using static blackjack.Structs.DealerStayTotalProbability;
+using static blackjack.Structs.DealerTotalProbability;
 using CsvHelper;
 using System.Globalization;
 
@@ -9,9 +9,9 @@ namespace blackjack;
 /**
  * Each hard hand total 4..21 -> P(17), P(18), P(19), P(20), P(21), P(B)
  */
-public class Table
+public class DealerTotalTable
 {
-    private readonly Dictionary<int, DealerStayTotalProbability> _dictionary = new();
+    private readonly Dictionary<int, DealerTotalProbability> _dictionary = new();
 
     public void Compute()
     {
@@ -48,10 +48,10 @@ public class Table
     }
     public void WriteToCsv()
     {
-        using (var writer = new StreamWriter("data\\DealerStayTotalProbability.csv"))
+        using (var writer = new StreamWriter($"data\\DealerTotal.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<DealerStayTotalProbabilityMap>();
+            csv.Context.RegisterClassMap<DealerTotalProbabilityMap>();
             csv.WriteRecords(_dictionary.Values);
         }
     }
