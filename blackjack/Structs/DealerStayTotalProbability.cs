@@ -40,12 +40,12 @@ public sealed class DealerStayTotalProbabilityMap : ClassMap<DealerStayTotalProb
 {
     public DealerStayTotalProbabilityMap()
     {
-        Map(m => m.DealerTotal);
-        Map(m => m.P17).Name("P17");
-        Map(m => m.P18).Name("P18");
-        Map(m => m.P19).Name("P19");
-        Map(m => m.P20).Name("P20");
-        Map(m => m.P21).Name("P21");
-        Map(m => m.PBust).Name("PBust");
+        Map(m => m.DealerTotal).Name("#");
+        Map(m => m.P17);
+        Map(m => m.P18);
+        Map(m => m.P19);
+        Map(m => m.P20);
+        Map(m => m.P21);
+        Map(m => m.PBust);
     }
 }

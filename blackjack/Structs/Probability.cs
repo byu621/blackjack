@@ -36,11 +36,3 @@ public record Probability
         return $"{percentage.ToString("0.00")}%";
     }
 }
-
-public sealed class ProbabilityMap : ClassMap<Probability>
-{
-    public ProbabilityMap()
-    {
-        Map(m => m.Value).Name("A");
-    }
-}

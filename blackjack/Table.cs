@@ -51,7 +51,6 @@ public class Table
         using (var writer = new StreamWriter("data\\DealerStayTotalProbability.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<ProbabilityMap>();
             csv.Context.RegisterClassMap<DealerStayTotalProbabilityMap>();
             csv.WriteRecords(_dictionary.Values);
         }
