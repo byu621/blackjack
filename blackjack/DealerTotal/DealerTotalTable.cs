@@ -31,6 +31,9 @@ public class DealerTotalTable
         {
             _dictionary.Add(new Hand(HARD, total), ComputeHard(total));
         }
+
+        ComputeSoft(12);
+        ComputeSoft(11);
     }
 
     private DealerTotalProbability ComputeHard(int total)
