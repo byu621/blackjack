@@ -39,26 +39,28 @@ public class PlayerStandPushTable
 
             push = _dealerTotalTable.Get(dealerHand).P17;
             _list.Add(new(17, dealerHand, push));
+
+            _list.Add(new(16, dealerHand, Zero));
         }
     }
 
     public void WriteToCsv()
     {
         List<PlayerStandPushDisplay> displayList = new();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             PlayerStandPushDisplay playerStandPushDisplay = new();
             playerStandPushDisplay.PlayerTotal = _list[i].PlayerTotal;
             playerStandPushDisplay.DealerA = _list[i].Push;
-            playerStandPushDisplay.Dealer10 = _list[i + 5].Push;
-            playerStandPushDisplay.Dealer9 = _list[i + 10].Push;
-            playerStandPushDisplay.Dealer8 = _list[i + 15].Push;
-            playerStandPushDisplay.Dealer7 = _list[i + 20].Push;
-            playerStandPushDisplay.Dealer6 = _list[i + 25].Push;
-            playerStandPushDisplay.Dealer5 = _list[i + 30].Push;
-            playerStandPushDisplay.Dealer4 = _list[i + 35].Push;
-            playerStandPushDisplay.Dealer3 = _list[i + 40].Push;
-            playerStandPushDisplay.Dealer2 = _list[i + 45].Push;
+            playerStandPushDisplay.Dealer10 = _list[i + 6].Push;
+            playerStandPushDisplay.Dealer9 = _list[i + 12].Push;
+            playerStandPushDisplay.Dealer8 = _list[i + 18].Push;
+            playerStandPushDisplay.Dealer7 = _list[i + 24].Push;
+            playerStandPushDisplay.Dealer6 = _list[i + 30].Push;
+            playerStandPushDisplay.Dealer5 = _list[i + 36].Push;
+            playerStandPushDisplay.Dealer4 = _list[i + 42].Push;
+            playerStandPushDisplay.Dealer3 = _list[i + 48].Push;
+            playerStandPushDisplay.Dealer2 = _list[i + 54].Push;
 
             displayList.Add(playerStandPushDisplay);
         }
