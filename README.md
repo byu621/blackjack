@@ -8,6 +8,9 @@ What are the odds the dealer ends up with `17` `18` `19` `20` `21` or `bust` giv
 ## 2. Player Stand Win
 What are the odds the player wins given the player stands? [data](data/PlayerStandWin.csv)
 
+#### Dependencies
+- 1\. Dealer Total
+
 ## Rules
 - S17 -> Dealer stands on soft 17
 

@@ -42,13 +42,11 @@ public class PlayerStandWinTable
 
             _list.Add(new(16, dealerHand, One - notLose));
         }
-
-        Console.WriteLine(_list.Count);
     }
 
     public void WriteToCsv()
     {
-        List<PlayerStandWinDisplay> list = new();
+        List<PlayerStandWinDisplay> displayList = new();
         for (int i = 0; i < 6; i++)
         {
             PlayerStandWinDisplay playerStandWinDisplay = new();
@@ -64,14 +62,14 @@ public class PlayerStandWinTable
             playerStandWinDisplay.Dealer3 = _list[i + 48].Win;
             playerStandWinDisplay.Dealer2 = _list[i + 54].Win;
 
-            list.Add(playerStandWinDisplay);
+            displayList.Add(playerStandWinDisplay);
         }
 
         using (var writer = new StreamWriter($"data\\PlayerStandWin.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
             csv.Context.RegisterClassMap<PlayerStandWinDisplayMap>();
-            csv.WriteRecords(list);
+            csv.WriteRecords(displayList);
         }
     }
 }
