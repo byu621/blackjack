@@ -1,7 +1,7 @@
 # Blackjack
 
 
-## Dealer Total
+## 1. Dealer Total
 What are the odds the dealer ends up with `17` `18` `19` `20` `21` or `bust` given their current hand? 
 [data](data/DealerTotal.csv)
 
