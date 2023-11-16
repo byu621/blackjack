@@ -29,7 +29,7 @@ public class PlayerStandWinTable
 
     public void WriteToCsv()
     {
-        using (var writer = new StreamWriter($"data\\PlayerStand.csv"))
+        using (var writer = new StreamWriter($"data\\PlayerStandWin.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
             csv.Context.RegisterClassMap<PlayerStandWinProbabilityMap>();
