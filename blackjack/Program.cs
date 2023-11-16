@@ -12,5 +12,9 @@ internal class Program
         PlayerStandWinTable playerStandWinTable = new(dealerTotalTable);
         playerStandWinTable.Compute();
         playerStandWinTable.WriteToCsv();
+
+        PlayerStandPushTable playerStandPushTable = new(dealerTotalTable);
+        playerStandPushTable.Compute();
+        playerStandPushTable.WriteToCsv();
     }
 }
