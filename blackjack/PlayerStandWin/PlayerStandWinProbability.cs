@@ -1,23 +1,16 @@
 ﻿using CsvHelper.Configuration;
 
 namespace blackjack;
-public record PlayerStandWinProbability
+public struct PlayerStandWinProbability
 {
     public int PlayerTotal { get; }
-    public Probability DealerAce { get; }
+    public Hand DealerHand {  get; }
+    public Probability Win { get; }
 
-    public PlayerStandWinProbability(int playerTotal, Probability dealerAce)
+    public PlayerStandWinProbability(int playerTotal, Hand dealerHand, Probability win)
     {
         PlayerTotal = playerTotal;
-        DealerAce = dealerAce;
-    }
-}
-
-public sealed class PlayerStandWinProbabilityMap : ClassMap<PlayerStandWinProbability>
-{
-    public PlayerStandWinProbabilityMap()
-    {
-        Map(m => m.PlayerTotal).Name("#");
-        Map(m => m.DealerAce).Name("A");
+        DealerHand = dealerHand;
+        Win = win;
     }
 }

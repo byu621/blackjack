@@ -7,8 +7,7 @@ namespace blackjack;
 
 public class PlayerStandWinTable
 {
-    private readonly Dictionary<int, PlayerStandWinProbability> _dictionary = new();
-
+    private readonly List<PlayerStandWinProbability> _list = new();
     private readonly DealerTotalTable _dealerTotalTable;
 
     public PlayerStandWinTable(DealerTotalTable dealerTotalTable)
@@ -22,34 +21,57 @@ public class PlayerStandWinTable
             new Hand(SOFT, 11), new Hand(HARD, 10), new Hand(HARD, 9), new Hand(HARD, 8), new Hand(HARD, 7), new Hand(HARD, 6), new Hand(HARD, 5),  new Hand(HARD, 4),  new Hand(HARD, 3), new Hand(HARD, 2)
         };
 
-        Probability notWin = Zero;
+        foreach(Hand dealerHand in dealerHands)
+        {
+            Probability notLose = Zero;
 
-        notWin += _dealerTotalTable.Get(new Hand(SOFT, 11)).P21;
-        _dictionary.Add(21, new(21, One - notWin));
+            notLose += _dealerTotalTable.Get(dealerHand).P21;
+            _list.Add(new(21, dealerHand, One - notLose));
 
-        notWin += _dealerTotalTable.Get(new Hand(SOFT, 11)).P20;
-        _dictionary.Add(20, new(20, One - notWin));
+            notLose += _dealerTotalTable.Get(dealerHand).P20;
+            _list.Add(new(20, dealerHand, One - notLose));
 
-        notWin += _dealerTotalTable.Get(new Hand(SOFT, 11)).P19;
-        _dictionary.Add(19, new(19, One - notWin));
+            notLose += _dealerTotalTable.Get(dealerHand).P19;
+            _list.Add(new(19, dealerHand, One - notLose));
 
-        notWin += _dealerTotalTable.Get(new Hand(SOFT, 11)).P18;
-        _dictionary.Add(18, new(18, One - notWin));
+            notLose += _dealerTotalTable.Get(dealerHand).P18;
+            _list.Add(new(18, dealerHand, One - notLose));
 
-        notWin += _dealerTotalTable.Get(new Hand(SOFT, 11)).P17;
-        _dictionary.Add(17, new(17, One - notWin));
+            notLose += _dealerTotalTable.Get(dealerHand).P17;
+            _list.Add(new(17, dealerHand, One - notLose));
 
-        _dictionary.Add(16, new(16, One - notWin));
+            _list.Add(new(16, dealerHand, One - notLose));
+        }
+
+        Console.WriteLine(_list.Count);
     }
 
     public void WriteToCsv()
     {
+        List<PlayerStandWinDisplay> list = new();
+        for (int i = 0; i < 6; i++)
+        {
+            PlayerStandWinDisplay playerStandWinDisplay = new();
+            playerStandWinDisplay.PlayerTotal = _list[i].PlayerTotal;
+            playerStandWinDisplay.DealerA = _list[i].Win;
+            playerStandWinDisplay.Dealer10 = _list[i + 6].Win;
+            playerStandWinDisplay.Dealer9 = _list[i + 12].Win;
+            playerStandWinDisplay.Dealer8 = _list[i + 18].Win;
+            playerStandWinDisplay.Dealer7 = _list[i + 24].Win;
+            playerStandWinDisplay.Dealer6 = _list[i + 30].Win;
+            playerStandWinDisplay.Dealer5 = _list[i + 36].Win;
+            playerStandWinDisplay.Dealer4 = _list[i + 42].Win;
+            playerStandWinDisplay.Dealer3 = _list[i + 48].Win;
+            playerStandWinDisplay.Dealer2 = _list[i + 54].Win;
+
+            list.Add(playerStandWinDisplay);
+        }
+
         using (var writer = new StreamWriter($"data\\PlayerStandWin.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PlayerStandWinProbabilityMap>();
-
-            csv.WriteRecords(_dictionary.Values);
+            csv.Context.RegisterClassMap<PlayerStandWinDisplayMap>();
+            csv.WriteRecords(list);
         }
     }
 }
