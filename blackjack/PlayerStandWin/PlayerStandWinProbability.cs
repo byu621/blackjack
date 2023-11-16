@@ -3,12 +3,12 @@
 namespace blackjack;
 public record PlayerStandWinProbability
 {
-    public Hand PlayerHand { get; }
+    public int PlayerTotal { get; }
     public Probability DealerAce { get; }
 
-    public PlayerStandWinProbability(Hand playerHand, Probability dealerAce)
+    public PlayerStandWinProbability(int playerTotal, Probability dealerAce)
     {
-        PlayerHand = playerHand;
+        PlayerTotal = playerTotal;
         DealerAce = dealerAce;
     }
 }
@@ -17,8 +17,7 @@ public sealed class PlayerStandWinProbabilityMap : ClassMap<PlayerStandWinProbab
 {
     public PlayerStandWinProbabilityMap()
     {
-        Map(m => m.PlayerHand.HandType).Name("Type");
-        Map(m => m.PlayerHand.Total).Name("#");
+        Map(m => m.PlayerTotal).Name("#");
         Map(m => m.DealerAce).Name("A");
     }
 }

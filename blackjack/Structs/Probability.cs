@@ -14,11 +14,6 @@ public record Probability
         return Value < 0;
     }
 
-    public Probability Inverse()
-    {
-        return new(1 - Value);
-    }
-
     public static Probability operator *(Probability a, Probability b)
     {
         return new(a.Value * b.Value);
@@ -26,6 +21,11 @@ public record Probability
     public static Probability operator +(Probability a, Probability b)
     {
         return new(a.Value + b.Value);
+    }
+
+    public static Probability operator -(Probability a, Probability b)
+    {
+        return new(a.Value - b.Value);
     }
 
     public static readonly Probability Zero = new(0);
