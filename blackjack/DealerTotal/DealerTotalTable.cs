@@ -36,6 +36,16 @@ public class DealerTotalTable
         ComputeSoft(11);
     }
 
+    public DealerTotalProbability Get(Hand hand)
+    {
+        if (!_dictionary.ContainsKey(hand))
+        {
+            throw new ArgumentException($"DealerTotalTable does not recognize argument hand = {hand}");
+        }
+
+        return _dictionary[hand];
+    }
+
     private DealerTotalProbability ComputeHard(int total)
     {
         if (total <= 1)
