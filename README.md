@@ -19,9 +19,12 @@ What are the odds the player pushes given the player stands? [data](data/PlayerS
 
 ## Rules
 - S17 -> Dealer stands on soft 17
+- 3:2 -> Blackjack pays 3 to 2
 
 ## Glossary
 - Hard -> If a hand has an ace, it's classed as a hard hand when the ace counts as 1
 - Soft -> If a hand has an ace, it's classed as a soft hand when the ace counts as 11.
 - Push -> the case when the dealer and the player have the same value and they neither win nor lose
-- BJ% -> 4/13 * 1/13 * 2 = 0.047 = 4.7%
+- P(BJ) -> 4/13 * 1/13 * 2 = 0.047 = 4.7%
+- P(BJ | A) -> 4/13 = 0.307 = 30.7%
+- P(BJ | 10) ->  1/13 = 0.076 = 7.6%
