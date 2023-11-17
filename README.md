@@ -11,12 +11,6 @@ What is player Ev given the player stands? [data](data/PlayerStandEv.csv)
 #### Dependencies
 - 1\. Dealer Total
 
-## 3. Player Stand Push
-What are the odds the player pushes given the player stands? [data](data/PlayerStandPush.csv)
-
-#### Dependencies
-- 1\. Dealer Total
-
 ## Rules
 - S17 -> Dealer stands on soft 17
 - 3:2 -> Blackjack pays 3 to 2
