@@ -9,8 +9,12 @@ internal class Program
         dealerTotalTable.Compute();
         //table.WriteToCsv();
 
-        PlayerStandEvTable playerStandWinTable = new(dealerTotalTable);
-        playerStandWinTable.Compute();
-        playerStandWinTable.WriteToCsv();
+        PlayerStandEvTable playerStandEvTable = new(dealerTotalTable);
+        playerStandEvTable.Compute();
+        //playerStandEvTable.WriteToCsv();
+
+        PlayerHitEvTable playerHitEvTable = new(playerStandEvTable);
+        playerHitEvTable.Compute();
+        playerHitEvTable.WriteToCsv();
     }
 }

@@ -20,6 +20,9 @@ public record Ev
         return new Ev(value);
     }
 
+    public static Ev Loss = new Ev(-1);
+    public static Ev Push = new Ev(0);
+    public static Ev Win = new Ev(1);
     private static decimal Blackjack3To2 = (decimal)1.5;
 
     public override string ToString()
