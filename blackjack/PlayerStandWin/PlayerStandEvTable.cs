@@ -5,12 +5,12 @@ using static blackjack.Probability;
 
 namespace blackjack;
 
-public class PlayerStandWinTable
+public class PlayerStandEvTable
 {
-    private readonly List<PlayerStandWinProbability> _list = new();
+    private readonly List<PlayerStandEvProbability> _list = new();
     private readonly DealerTotalTable _dealerTotalTable;
 
-    public PlayerStandWinTable(DealerTotalTable dealerTotalTable)
+    public PlayerStandEvTable(DealerTotalTable dealerTotalTable)
     {
         _dealerTotalTable = dealerTotalTable;
     }
@@ -84,10 +84,10 @@ public class PlayerStandWinTable
     public void WriteToCsv()
     {
         Console.WriteLine(_list.Count);
-        List<PlayerStandWinDisplay> displayList = new();
+        List<PlayerStandEvDisplay> displayList = new();
         for (int i = 0; i < 7; i++)
         {
-            PlayerStandWinDisplay playerStandWinDisplay = new();
+            PlayerStandEvDisplay playerStandWinDisplay = new();
             playerStandWinDisplay.PlayerTotal = _list[i].PlayerTotal;
             playerStandWinDisplay.DealerA = _list[i].Ev;
             playerStandWinDisplay.Dealer10 = _list[i + 7].Ev;
@@ -103,10 +103,10 @@ public class PlayerStandWinTable
             displayList.Add(playerStandWinDisplay);
         }
 
-        using (var writer = new StreamWriter($"data\\PlayerStandWin.csv"))
+        using (var writer = new StreamWriter($"data\\PlayerStandEv.csv"))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PlayerStandWinDisplayMap>();
+            csv.Context.RegisterClassMap<PlayerStandEvDisplayMap>();
             csv.WriteRecords(displayList);
         }
     }

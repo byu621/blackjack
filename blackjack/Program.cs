@@ -9,7 +9,7 @@ internal class Program
         dealerTotalTable.Compute();
         //table.WriteToCsv();
 
-        PlayerStandWinTable playerStandWinTable = new(dealerTotalTable);
+        PlayerStandEvTable playerStandWinTable = new(dealerTotalTable);
         playerStandWinTable.Compute();
         playerStandWinTable.WriteToCsv();
 

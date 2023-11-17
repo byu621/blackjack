@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration;
 
 namespace blackjack;
-public struct PlayerStandWinDisplay { 
+public struct PlayerStandEvDisplay { 
     public string PlayerTotal { get; set; }
     public Ev DealerA { get; set; }
     public Ev Dealer10 { get; set; }
@@ -16,9 +16,9 @@ public struct PlayerStandWinDisplay {
 
 }
 
-public sealed class PlayerStandWinDisplayMap : ClassMap<PlayerStandWinDisplay>
+public sealed class PlayerStandEvDisplayMap : ClassMap<PlayerStandEvDisplay>
 {
-    public PlayerStandWinDisplayMap()
+    public PlayerStandEvDisplayMap()
     {
         Map(m => m.PlayerTotal).Name("#");
         Map(m => m.DealerA).Name("A");
