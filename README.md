@@ -17,7 +17,7 @@ What is player Ev given the player stands? [data](data/PlayerStandEv.csv)
 
 ## Glossary
 - Hard -> If a hand has an ace, it's classed as a hard hand when the ace counts as 1
-- Soft -> If a hand has an ace, it's classed as a soft hand when the ace counts as 11.
+- Soft -> If a hand has an ace, it's classed as a soft hand when the ace counts as 11
 - Push -> the case when the dealer and the player have the same value and they neither win nor lose
 - P(BJ) -> 4/13 * 1/13 * 2 = 0.047 = 4.7%
 - P(BJ | A) -> 4/13 = 0.307 = 30.7%
