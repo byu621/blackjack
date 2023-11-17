@@ -3,14 +3,14 @@
 namespace blackjack;
 public struct PlayerStandWinProbability
 {
-    public int PlayerTotal { get; }
+    public string PlayerTotal { get; }
     public Hand DealerHand {  get; }
-    public Probability Win { get; }
+    public Ev Ev { get; }
 
-    public PlayerStandWinProbability(int playerTotal, Hand dealerHand, Probability win)
+    public PlayerStandWinProbability(string playerTotal, Hand dealerHand, Ev ev)
     {
         PlayerTotal = playerTotal;
         DealerHand = dealerHand;
-        Win = win;
+        Ev = ev;
     }
 }

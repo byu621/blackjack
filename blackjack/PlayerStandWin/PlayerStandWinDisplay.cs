@@ -2,17 +2,17 @@
 
 namespace blackjack;
 public struct PlayerStandWinDisplay { 
-    public int PlayerTotal { get; set; }
-    public Probability DealerA { get; set; }
-    public Probability Dealer10 { get; set; }
-    public Probability Dealer9 { get; set; }
-    public Probability Dealer8 { get; set; }
-    public Probability Dealer7 { get; set; }
-    public Probability Dealer6 { get; set; }
-    public Probability Dealer5 { get; set; }
-    public Probability Dealer4 { get; set; }
-    public Probability Dealer3 { get; set; }
-    public Probability Dealer2 { get; set; }
+    public string PlayerTotal { get; set; }
+    public Ev DealerA { get; set; }
+    public Ev Dealer10 { get; set; }
+    public Ev Dealer9 { get; set; }
+    public Ev Dealer8 { get; set; }
+    public Ev Dealer7 { get; set; }
+    public Ev Dealer6 { get; set; }
+    public Ev Dealer5 { get; set; }
+    public Ev Dealer4 { get; set; }
+    public Ev Dealer3 { get; set; }
+    public Ev Dealer2 { get; set; }
 
 }
 
