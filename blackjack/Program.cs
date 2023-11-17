@@ -11,7 +11,7 @@ internal class Program
 
         PlayerStandEvTable playerStandEvTable = new(dealerTotalTable);
         playerStandEvTable.Compute();
-        //playerStandEvTable.WriteToCsv();
+        playerStandEvTable.WriteToCsv();
 
         PlayerHitEvTable playerHitEvTable = new(playerStandEvTable);
         playerHitEvTable.Compute();

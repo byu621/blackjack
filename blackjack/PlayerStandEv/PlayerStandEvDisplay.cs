@@ -2,7 +2,7 @@
 
 namespace blackjack;
 public struct PlayerStandEvDisplay { 
-    public string PlayerTotal { get; set; }
+    public Hand PlayerHand { get; set; }
     public Ev DealerA { get; set; }
     public Ev Dealer10 { get; set; }
     public Ev Dealer9 { get; set; }
@@ -20,7 +20,7 @@ public sealed class PlayerStandEvDisplayMap : ClassMap<PlayerStandEvDisplay>
 {
     public PlayerStandEvDisplayMap()
     {
-        Map(m => m.PlayerTotal).Name("#");
+        Map(m => m.PlayerHand).Name("#").Convert(args => args.Value.PlayerHand.HandType == HandType.BLACKJACK ? "BJ" : args.Value.PlayerHand.Total.ToString());
         Map(m => m.DealerA).Name("A");
         Map(m => m.Dealer10).Name("10");
         Map(m => m.Dealer9).Name("9");

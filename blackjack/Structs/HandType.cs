@@ -2,5 +2,5 @@
 
 public enum HandType
 {
-    SOFT, HARD
+    SOFT, HARD, BLACKJACK
 }

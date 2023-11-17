@@ -13,6 +13,7 @@ public readonly struct Hand
         Total = total;
     }
 
+    public static Hand Blackjack = new Hand(BLACKJACK, 21);
     public static Hand Ace = new Hand(SOFT, 11);
     public static Hand Ten = new Hand(HARD, 10);
 }
