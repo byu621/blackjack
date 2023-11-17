@@ -32,6 +32,9 @@ public record Probability
     public static readonly Probability One = new(1);
     public static readonly Probability OneThirteenth = new((decimal)1 / 13);
     public static readonly Probability FourThirteenth = new((decimal)4 / 13);
+    public static readonly Probability Blackjack = new(1 / 4 * 1 / 13 * 2);
+    public static readonly Probability BlackjackGivenAce = new(4 / 13);
+    public static readonly Probability BlackjackGivenTen = new(1 / 13);
 
     public override string ToString()
     {
