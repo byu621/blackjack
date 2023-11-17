@@ -34,7 +34,7 @@ public class PlayerStandEvTable
             // BJ
             win = One - dealerBlackjack;
             lose = Zero;
-            ev = Ev.Calc(win, lose);
+            ev = Ev.CalcBlackjack(win, lose);
             _list.Add(new("BJ", dealerHand, ev));
 
             //21

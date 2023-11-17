@@ -14,6 +14,14 @@ public record Ev
         return new Ev(win.Value - lose.Value);
     }
 
+    public static Ev CalcBlackjack(Probability win, Probability lose)
+    {
+        decimal value = (win.Value - lose.Value) * Blackjack3To2;
+        return new Ev(value);
+    }
+
+    private static decimal Blackjack3To2 = (decimal)1.5;
+
     public override string ToString()
     {
         decimal percentage = Value * 100;
