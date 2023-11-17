@@ -6,12 +6,12 @@ public record Probability
 
     public Probability(decimal value)
     {
-        Value = value;
-    }
+        if (value < 0)
+        {
+            throw new ArgumentOutOfRangeException($"Probability can't be negative probability = {value}");
+        }
 
-    public bool IsNegative()
-    {
-        return Value < 0;
+        Value = value;
     }
 
     public static Probability operator *(Probability a, Probability b)
