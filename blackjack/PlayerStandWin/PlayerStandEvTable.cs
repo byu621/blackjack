@@ -38,7 +38,7 @@ public class PlayerStandEvTable
             _list.Add(new("BJ", dealerHand, ev));
 
             //21
-            push = dealerProbability.P21;
+            push = dealerProbability.P21 - dealerBlackjack;
             lose = dealerBlackjack;
             win = One - push - lose;
             ev = Ev.Calc(win, lose);
