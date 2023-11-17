@@ -8,6 +8,9 @@ What are the odds the dealer ends up with `17` `18` `19` `20` `21` or `bust` giv
 ## 2. Player Stand Ev
 What is player Ev given the player stands? [data](data/PlayerStandEv.csv)
 
+## 3. Player Hit Ev
+What is player Ev given the player can hit or stand? [data](data/PlayerHitEv.csv)
+
 ## Rules
 - S17 -> Dealer stands on soft 17
 - 3:2 -> Blackjack pays 3 to 2

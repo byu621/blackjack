@@ -84,6 +84,22 @@ public class PlayerStandEvTable
         }
     }
 
+    public Ev Get(Hand playerHand, Hand dealerHand)
+    {
+        if (playerHand.Total <= 16)
+        {
+            return _dictionary[(new Hand(HARD, 16), dealerHand)];
+        }
+
+        if (playerHand.HandType == BLACKJACK)
+        {
+            return _dictionary[(playerHand, dealerHand)];
+        }
+
+        Hand reformedPlayerHand = new Hand(HARD, playerHand.Total);
+        return _dictionary[(reformedPlayerHand, dealerHand)];
+    }
+
     public void WriteToCsv()
     {
         List<PlayerStandEvDisplay> displayList = new();

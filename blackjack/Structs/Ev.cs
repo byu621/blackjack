@@ -1,4 +1,6 @@
-﻿namespace blackjack;
+﻿using System.Numerics;
+
+namespace blackjack;
 
 public record Ev
 {
@@ -18,6 +20,21 @@ public record Ev
     {
         decimal value = (win.Value - lose.Value) * Blackjack3To2;
         return new Ev(value);
+    }
+
+    public static Ev operator +(Ev a, Ev b)
+    {
+        return new Ev(a.Value + b.Value);
+    }
+
+    public static Ev operator *(Ev a, Probability b)
+    {
+        return new Ev(a.Value * b.Value);
+    }
+
+    public static Ev Max(Ev a, Ev b)
+    {
+        return a.Value > b.Value ? a : b;
     }
 
     public static Ev Loss = new Ev(-1);
