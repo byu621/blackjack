@@ -1,4 +1,4 @@
-﻿using CsvHelper.Configuration;
+﻿using static blackjack.HandType;
 
 namespace blackjack;
 
@@ -9,12 +9,10 @@ public readonly struct Hand
 
     public Hand(HandType handType, int total)
     {
-        //if (total < 2 || total > 22)
-        //{
-            //throw new ArgumentException($"Hand is not valid handType = {handType} total = {total}");
-        //}
-
         HandType = handType;
         Total = total;
     }
+
+    public static Hand Ace = new Hand(SOFT, 11);
+    public static Hand Ten = new Hand(HARD, 10);
 }
