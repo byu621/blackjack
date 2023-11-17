@@ -19,3 +19,4 @@ What is player Ev given the player stands? [data](data/PlayerStandEv.csv)
 - P(BJ) -> 4/13 * 1/13 * 2 = 0.047 = 4.7%
 - P(BJ | A) -> 4/13 = 0.307 = 30.7%
 - P(BJ | 10) ->  1/13 = 0.076 = 7.6%
+- Ev -> Ev stands for Expected Value e.g. An Expected Value of 50% means you are expected to gain $0.50 for each $1 bet
