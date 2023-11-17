@@ -5,8 +5,8 @@
 What are the odds the dealer ends up with `17` `18` `19` `20` `21` or `bust` given their current hand? 
 [data](data/DealerTotal.csv)
 
-## 2. Player Stand Win
-What are the odds the player wins given the player stands? [data](data/PlayerStandWin.csv)
+## 2. Player Stand Ev
+What is player Ev given the player stands? [data](data/PlayerStandEv.csv)
 
 #### Dependencies
 - 1\. Dealer Total
