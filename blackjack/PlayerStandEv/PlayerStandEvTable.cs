@@ -83,7 +83,6 @@ public class PlayerStandEvTable
 
     public void WriteToCsv()
     {
-        Console.WriteLine(_list.Count);
         List<PlayerStandEvDisplay> displayList = new();
         for (int i = 0; i < 7; i++)
         {
