@@ -1,4 +1,7 @@
-﻿namespace blackjack;
+﻿using System.Globalization;
+using CsvHelper;
+
+namespace blackjack;
 
 internal class Program
 {
@@ -7,14 +10,18 @@ internal class Program
         Console.WriteLine("Hello, Blackjack");
         DealerTotalTable dealerTotalTable = new();
         dealerTotalTable.Compute();
-        //table.WriteToCsv();
+        dealerTotalTable.WriteToCsv();
 
-        PlayerStandEvTable playerStandEvTable = new(dealerTotalTable);
-        playerStandEvTable.Compute();
-        playerStandEvTable.WriteToCsv();
+        Try foo = new();
+        foo.Compute();
+        foo.PrintToConsole();
 
-        PlayerHitEvTable playerHitEvTable = new(playerStandEvTable);
-        playerHitEvTable.Compute();
-        playerHitEvTable.WriteToCsv();
+        // PlayerStandEvTable playerStandEvTable = new(dealerTotalTable);
+        // playerStandEvTable.Compute();
+        // playerStandEvTable.WriteToCsv();
+
+        // PlayerHitEvTable playerHitEvTable = new(playerStandEvTable);
+        // playerHitEvTable.Compute();
+        // playerHitEvTable.WriteToCsv();
     }
 }
