@@ -4,7 +4,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        PlayerStandRunner.Print();
-        PlayerStandRunner.WriteToCsv();
+        DealerTotalRunnner.WriteToCsv();
+        // PlayerStandRunner.Print();
+        // PlayerStandRunner.WriteToCsv();
     }
 }
