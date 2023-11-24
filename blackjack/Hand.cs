@@ -23,6 +23,12 @@ public record Hand
 
     public DealerTotalProbability CalculateDTP()
     {
+        if (value > 21 && shape == Shape.SOFT) 
+        {
+            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            return hand.CalculateDTP();
+        }
+        
         if (value > 21) return new (0, 0, 0, 0, 0, 1);
         if (value == 21) return new (0, 0, 0, 0, 1, 0);
         if (value == 20) return new (0, 0, 0, 1, 0, 0);
@@ -34,8 +40,8 @@ public record Hand
         for (int hit = 1; hit <= 10; hit++)
         {
             decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
-            Hand newHand = Hit(hit);
-            dealerTotalProbability = dealerTotalProbability.Add(newHand.CalculateDTP(), hitProbability);
+            Hand hand = Hit(hit);
+            dealerTotalProbability = dealerTotalProbability.Add(hand.CalculateDTP(), hitProbability);
         }
 
         return dealerTotalProbability;

@@ -34,4 +34,9 @@ public record DealerTotalProbability
         decimal newPBust = pBust + other.pBust * probability;
         return new DealerTotalProbability(newP17, newP18, newP19, newP20, newP21, newPBust);
     }
+
+    public override string ToString()
+    {
+        return $"{p17 * 100:0.00},{p18 * 100:0.00},{p19 * 100:0.00},{p20 * 100:0.00},{p21 * 100:0.00},{pBust * 100:0.00}";
+    }
 }
