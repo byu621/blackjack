@@ -58,7 +58,7 @@ public record Hand
     public Hand Hit(int hit)
     {
         Shape newShape = shape == Shape.SOFT || hit == 1 ? Shape.SOFT : Shape.HARD;
-        int newValue = hit == 1 ? value + 11 : value + hit;
+        int newValue = hit == 1 && shape == Shape.HARD ? value + 11 : value + hit;
         bool isBlackjack = (soloAce && hit == 10) || (soloTen && hit == 1);
         return new Hand(newShape, newValue, false, false, isBlackjack);
     }

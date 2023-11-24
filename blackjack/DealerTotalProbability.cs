@@ -37,6 +37,6 @@ public record DealerTotalProbability
 
     public override string ToString()
     {
-        return $"{p17 * 100:0.00},{p18 * 100:0.00},{p19 * 100:0.00},{p20 * 100:0.00},{p21 * 100:0.00},{pBust * 100:0.00}";
+        return $"{p17 * 100:0.00}%,{p18 * 100:0.00}%,{p19 * 100:0.00}%,{p20 * 100:0.00}%,{p21 * 100:0.00}%,{pBust * 100:0.00}%";
     }
 }
