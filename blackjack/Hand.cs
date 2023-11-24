@@ -47,6 +47,33 @@ public record Hand
         return dealerTotalProbability;
     }
 
+    public decimal CalculatePSEV(Hand dealer)
+    {
+        DealerTotalProbability dtp = dealer.CalculateDTP();
+
+        if (blackjack)
+        {
+            decimal push = dealer.ProbabilityBlackjack();
+            decimal win = 1 - push;
+            decimal lose = 0;
+            return (win - lose) * 1.5m;
+        }
+        else if (value == 21)
+        {
+            decimal push = dtp.GetProbability(value) - dealer.ProbabilityBlackjack();
+            decimal win = dtp.PBust + dtp.GetAccumulatedProbabilityBelowValue(value);
+            decimal lose = 1 - push - win;
+            return win - lose;
+        }
+        else 
+        {
+            decimal push = dtp.GetProbability(value);
+            decimal win = dtp.PBust + dtp.GetAccumulatedProbabilityBelowValue(value);
+            decimal lose = 1 - push - win;
+            return win - lose;
+        }
+    }
+
     public decimal ProbabilityBlackjack()
     {
         if (blackjack) return 1;
@@ -61,5 +88,21 @@ public record Hand
         int newValue = hit == 1 && shape == Shape.HARD ? value + 11 : value + hit;
         bool isBlackjack = (soloAce && hit == 10) || (soloTen && hit == 1);
         return new Hand(newShape, newValue, false, false, isBlackjack);
+    }
+
+    public static List<Hand> GetDealerStartingHands()
+    {
+        List<Hand> list = new()
+        {
+            new Hand(Shape.SOFT, 11, true, false, false),
+            new Hand(Shape.HARD, 10, false, true, false)
+        };
+
+        for (int i = 9; i >= 2; i--)
+        {
+            list.Add(new (Shape.HARD, i, false, false, false));
+        }
+
+        return list;
     }
 }
