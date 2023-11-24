@@ -21,9 +21,31 @@ public record Hand
         this.blackjack = blackjack;
     }
 
-    public decimal CalculateDTP(bool isBust, int target)
+    public decimal CalculateDealerBust()
     {
-        if (!isBust && target < 17)
+        if (value > 21 && shape == Shape.SOFT) 
+        {
+            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            return hand.CalculateDealerBust();
+        }
+
+        if (value > 21) return 1;
+        if (value >= 17) return 0;
+        
+        decimal probability = 0;
+        for (int hit = 1; hit <= 10; hit++)
+        {
+            decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
+            Hand hand = Hit(hit);
+            probability += hand.CalculateDealerBust() * hitProbability;
+        }
+
+        return probability;
+    }
+
+    public decimal CalculateDTP(int target)
+    {
+        if (target < 17)
         {
             return 0;
         }
@@ -31,25 +53,20 @@ public record Hand
         if (value > 21 && shape == Shape.SOFT) 
         {
             Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
-            return hand.CalculateDTP(isBust, target);
+            return hand.CalculateDTP(target);
         }
 
-        if (value > 21 && isBust) return 1;
-        if (value >= 17 && isBust) return 0;
-        if (!isBust)
-        {
-            if (value > 21) return 0;
-            if (value == target) return 1;
-            if (value > target) return 0;
-            if (value >= 17) return 0;
-        }
+        if (value > 21) return 0;
+        if (value == target) return 1;
+        if (value > target) return 0;
+        if (value >= 17) return 0;
         
         decimal probability = 0;
         for (int hit = 1; hit <= 10; hit++)
         {
             decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
             Hand hand = Hit(hit);
-            probability += hand.CalculateDTP(isBust, target) * hitProbability;
+            probability += hand.CalculateDTP(target) * hitProbability;
         }
 
         return probability;
@@ -60,7 +77,7 @@ public record Hand
         decimal probability = 0;
         for (int i = 17; i < target; i++)
         {
-            probability += CalculateDTP(false, i);
+            probability += CalculateDTP(i);
         }
 
         return probability;
@@ -78,15 +95,15 @@ public record Hand
         }
         else if (value == 21)
         {
-            decimal push = dealer.CalculateDTP(false, value) - dealer.ProbabilityBlackjack();
-            decimal win = dealer.CalculateDTP(true, -1) + dealer.CalculateDTPBelowTarget(value);
+            decimal push = dealer.CalculateDTP(value) - dealer.ProbabilityBlackjack();
+            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
             decimal lose = 1 - push - win;
             return win - lose;
         }
         else 
         {
-            decimal push = dealer.CalculateDTP(false, value);
-            decimal win = dealer.CalculateDTP(true, -1) + dealer.CalculateDTPBelowTarget(value);
+            decimal push = dealer.CalculateDTP(value);
+            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
             decimal lose = 1 - push - win;
             return win - lose;
         }

@@ -25,24 +25,24 @@ public static class DealerTotalRunnner
         for (int i = 21; i >= 2; i--)
         {
             Hand hand = new Hand(Shape.HARD, i, false, false, false);
-            decimal p17 = hand.CalculateDTP(false, 17);
-            decimal p18 = hand.CalculateDTP(false, 18);
-            decimal p19 = hand.CalculateDTP(false, 19);
-            decimal p20 = hand.CalculateDTP(false, 20);
-            decimal p21 = hand.CalculateDTP(false, 21);
-            decimal pBust = hand.CalculateDTP(true, -1);
+            decimal p17 = hand.CalculateDTP(17);
+            decimal p18 = hand.CalculateDTP(18);
+            decimal p19 = hand.CalculateDTP(19);
+            decimal p20 = hand.CalculateDTP(20);
+            decimal p21 = hand.CalculateDTP(21);
+            decimal pBust = hand.CalculateDealerBust();
             sb.AppendLine($"H{i},{p17 * 100:0.00}%,{p18 * 100:0.00}%,{p19 * 100:0.00}%,{p20 * 100:0.00}%,{p21 * 100:0.00}%,{pBust * 100:0.00}%");
         }
 
         for (int i = 21; i >= 11; i--)
         {
             Hand hand = new Hand(Shape.SOFT, i, false, false, false);
-            decimal p17 = hand.CalculateDTP(false, 17);
-            decimal p18 = hand.CalculateDTP(false, 18);
-            decimal p19 = hand.CalculateDTP(false, 19);
-            decimal p20 = hand.CalculateDTP(false, 20);
-            decimal p21 = hand.CalculateDTP(false, 21);
-            decimal pBust = hand.CalculateDTP(true, -1);
+            decimal p17 = hand.CalculateDTP(17);
+            decimal p18 = hand.CalculateDTP(18);
+            decimal p19 = hand.CalculateDTP(19);
+            decimal p20 = hand.CalculateDTP(20);
+            decimal p21 = hand.CalculateDTP(21);
+            decimal pBust = hand.CalculateDealerBust();
             sb.AppendLine($"S{i},{p17 * 100:0.00}%,{p18 * 100:0.00}%,{p19 * 100:0.00}%,{p20 * 100:0.00}%,{p21 * 100:0.00}%,{pBust * 100:0.00}%");
         }
 
