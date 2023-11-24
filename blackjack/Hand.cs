@@ -23,6 +23,11 @@ public record Hand
 
     public decimal CalculateDealerTotalProbability(bool isBust, int target)
     {
+        if (!isBust && target < 17)
+        {
+            return 0;
+        }
+
         if (value > 21 && shape == Shape.SOFT) 
         {
             Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
@@ -50,30 +55,41 @@ public record Hand
         return probability;
     }
 
+    public decimal CalculateDTPBelowTarget(int target)
+    {
+        decimal probability = 0;
+        for (int i = 17; i < target; i++)
+        {
+            probability += CalculateDealerTotalProbability(false, i);
+        }
+
+        return probability;
+    }
+
+
     public decimal CalculatePSEV(Hand dealer)
     {
-        return 0;
-        // if (blackjack)
-        // {
-        //     decimal push = dealer.ProbabilityBlackjack();
-        //     decimal win = 1 - push;
-        //     decimal lose = 0;
-        //     return (win - lose) * 1.5m;
-        // }
-        // else if (value == 21)
-        // {
-        //     decimal push = dealer.CalculateDealerTotalProbability(false, value) - dealer.ProbabilityBlackjack();
-        //     decimal win = dealer.CalculateDealerTotalProbability(true, -1) + dtp.GetAccumulatedProbabilityBelowValue(value);
-        //     decimal lose = 1 - push - win;
-        //     return win - lose;
-        // }
-        // else 
-        // {
-        //     decimal push = dtp.GetProbability(value);
-        //     decimal win = dtp.PBust + dtp.GetAccumulatedProbabilityBelowValue(value);
-        //     decimal lose = 1 - push - win;
-        //     return win - lose;
-        // }
+        if (blackjack)
+        {
+            decimal push = dealer.ProbabilityBlackjack();
+            decimal win = 1 - push;
+            decimal lose = 0;
+            return (win - lose) * 1.5m;
+        }
+        else if (value == 21)
+        {
+            decimal push = dealer.CalculateDealerTotalProbability(false, value) - dealer.ProbabilityBlackjack();
+            decimal win = dealer.CalculateDealerTotalProbability(true, -1) + dealer.CalculateDTPBelowTarget(value);
+            decimal lose = 1 - push - win;
+            return win - lose;
+        }
+        else 
+        {
+            decimal push = dealer.CalculateDealerTotalProbability(false, value);
+            decimal win = dealer.CalculateDealerTotalProbability(true, -1) + dealer.CalculateDTPBelowTarget(value);
+            decimal lose = 1 - push - win;
+            return win - lose;
+        }
     }
 
     public decimal ProbabilityBlackjack()
