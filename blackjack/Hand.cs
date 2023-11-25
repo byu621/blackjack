@@ -9,6 +9,7 @@ public record Hand
     public bool Blackjack { get; }
 
     private static readonly Dictionary<(Hand, Hand), decimal> PlayerStandCache = new();
+    private static readonly Dictionary<(Hand, Hand), decimal> PlayerHitCache = new();
 
     public Hand(Shape shape, int value, bool soloAce, bool soloTen, bool blackjack)
     {
@@ -121,6 +122,11 @@ public record Hand
     
     public decimal CalculatePHEV(Hand dealer)
     {
+        if (PlayerHitCache.ContainsKey((this, dealer)))
+        {
+            return PlayerHitCache[(this, dealer)];
+        }
+        
         if (Value > 21 && Shape == Shape.SOFT) 
         {
             Hand hand = new Hand(Shape.HARD, Value - 10, false, false, false);
@@ -142,7 +148,9 @@ public record Hand
         }
 
         decimal hitEv = ev;
-        return Math.Max(standEv, hitEv);
+        decimal max = Math.Max(standEv, hitEv);
+        PlayerHitCache[(this, dealer)] = max;
+        return max;
     }
 
     private decimal ProbabilityBlackjack()
