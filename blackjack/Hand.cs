@@ -109,6 +109,31 @@ public record Hand
             return win - lose;
         }
     }
+    
+    public decimal CalculatePHEV(Hand dealer)
+    {
+        if (value > 21 && shape == Shape.SOFT) 
+        {
+            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            return hand.CalculatePHEV(dealer);
+        }
+
+        if (value > 21)
+        {
+            return -1;
+        }
+        
+        decimal standEv = CalculatePSEV(dealer);
+        decimal ev = 0;
+        for (int hit = 1; hit <= 10; hit++)
+        {
+            Hand hand = Hit(hit);
+            ev += hand.CalculatePHEV(dealer);
+        }
+
+        decimal hitEv = ev / 10;
+        return Math.Max(standEv, hitEv);
+    }
 
     private decimal ProbabilityBlackjack()
     {
