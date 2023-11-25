@@ -8,6 +8,8 @@ public record Hand
     private readonly bool soloAce;
     private readonly bool blackjack;
 
+    private static readonly Dictionary<(Hand, Hand), decimal> PlayerStandCache = new();
+
     public Hand(Shape shape, int value, bool soloAce, bool soloTen, bool blackjack)
     {
         if (soloAce && (shape != Shape.SOFT || value != 11)) throw new ArgumentException("ERROR");
@@ -83,31 +85,38 @@ public record Hand
         return probability;
     }
 
-
     public decimal CalculatePSEV(Hand dealer)
     {
+        if (PlayerStandCache.ContainsKey((this, dealer)))
+        {
+            return PlayerStandCache[(this, dealer)];
+        }
+
+        decimal ev;
         if (blackjack)
         {
             decimal push = dealer.ProbabilityBlackjack();
             decimal win = 1 - push;
             decimal lose = 0;
-            return (win - lose) * 1.5m;
+            ev = (win - lose) * 1.5m;
         }
-
-        if (value == 21)
+        else if (value == 21)
         {
             decimal push = dealer.CalculateDTP(value) - dealer.ProbabilityBlackjack();
             decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
             decimal lose = 1 - push - win;
-            return win - lose;
+            ev = win - lose;
         }
         else 
         {
             decimal push = dealer.CalculateDTP(value);
             decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
             decimal lose = 1 - push - win;
-            return win - lose;
+            ev = win - lose;
         }
+
+        PlayerStandCache[(this, dealer)] = ev;
+        return ev;
     }
     
     public decimal CalculatePHEV(Hand dealer)
