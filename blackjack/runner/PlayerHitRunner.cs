@@ -24,11 +24,11 @@ public class PlayerHitRunner
         {
             {"BJ", new Hand(Shape.SOFT, 21, false, false, true)},
             {"21", new Hand(Shape.SOFT, 21, false, false, false)},
-            // {"20", new Hand(Shape.HARD, 20, false, false, false)},
-            // {"19", new Hand(Shape.HARD, 19, false, false, false)},
-            // {"18", new Hand(Shape.HARD, 18, false, false, false)},
-            // {"17", new Hand(Shape.HARD, 17, false, false, false)},
-            // {"16", new Hand(Shape.HARD, 16, false, false, false)},
+            {"20", new Hand(Shape.HARD, 20, false, false, false)},
+            {"19", new Hand(Shape.HARD, 19, false, false, false)},
+            {"18", new Hand(Shape.HARD, 18, false, false, false)},
+            {"17", new Hand(Shape.HARD, 17, false, false, false)},
+            {"16", new Hand(Shape.HARD, 16, false, false, false)},
         };
 
         StringBuilder sb = new();
