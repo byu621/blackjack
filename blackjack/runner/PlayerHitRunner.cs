@@ -2,7 +2,7 @@
 
 namespace blackjack;
 
-public class PlayerHitRunner
+public static class PlayerHitRunner
 {
     public static void Print()
     {
@@ -20,24 +20,25 @@ public class PlayerHitRunner
     private static string ToStringRepresentation()
     {
         List<Hand> dealerHands = Hand.GetDealerStartingHands();
-        Dictionary<string, Hand> playerHands = new()
+        List<Hand> playerHands = new()
         {
-            {"BJ", new Hand(Shape.SOFT, 21, false, false, true)},
-            {"21", new Hand(Shape.SOFT, 21, false, false, false)},
-            {"20", new Hand(Shape.HARD, 20, false, false, false)},
-            {"19", new Hand(Shape.HARD, 19, false, false, false)},
-            {"18", new Hand(Shape.HARD, 18, false, false, false)},
-            {"17", new Hand(Shape.HARD, 17, false, false, false)},
-            {"16", new Hand(Shape.HARD, 16, false, false, false)},
+            new Hand(Shape.SOFT, 21, false, false, true),
+            new Hand(Shape.HARD, 21, false, false, false),
+            new Hand(Shape.HARD, 20, false, false, false),
+            new Hand(Shape.HARD, 19, false, false, false),
+            new Hand(Shape.HARD, 18, false, false, false),
+            new Hand(Shape.HARD, 17, false, false, false),
+            new Hand(Shape.HARD, 16, false, false, false),
         };
 
         StringBuilder sb = new();
         sb.AppendLine("#,A,10,9,8,7,6,5,4,3,2");
 
-        foreach (KeyValuePair<string, Hand> kvp in playerHands)
+        foreach (Hand playerHand in playerHands)
         {
-            sb.Append(kvp.Key);
-            Hand playerHand = kvp.Value;
+            string prefix = playerHand.Shape == Shape.SOFT ? "S" : "H";
+            string key = playerHand.Blackjack ? "BJ" : $"{prefix}{playerHand.Value.ToString()}";
+            sb.Append(key);
             foreach(Hand dealerHand in dealerHands)
             {
                 sb.Append($",{playerHand.CalculatePHEV(dealerHand) * 100:0.00}%");

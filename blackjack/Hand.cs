@@ -2,7 +2,7 @@ namespace blackjack;
 
 public record Hand 
 {
-    private Shape Shape { get; }
+    public Shape Shape { get; }
     public int Value { get; }
     private readonly bool soloTen;
     private readonly bool soloAce;
