@@ -2,11 +2,11 @@ namespace blackjack;
 
 public record Hand 
 {
-    private readonly Shape shape;
-    private readonly int value;
+    private Shape Shape { get; }
+    public int Value { get; }
     private readonly bool soloTen;
     private readonly bool soloAce;
-    private readonly bool blackjack;
+    public bool Blackjack { get; }
 
     private static readonly Dictionary<(Hand, Hand), decimal> PlayerStandCache = new();
 
@@ -16,23 +16,23 @@ public record Hand
         if (soloTen && (shape != Shape.HARD || value != 10)) throw new ArgumentException("ERROR");
         if (blackjack && (shape != Shape.SOFT || value != 21)) throw new ArgumentException("ERROR");
 
-        this.shape = shape;
-        this.value = value;
+        Shape = shape;
+        Value = value;
         this.soloAce = soloAce;
         this.soloTen = soloTen;
-        this.blackjack = blackjack;
+        Blackjack = blackjack;
     }
 
     public decimal CalculateDealerBust()
     {
-        if (value > 21 && shape == Shape.SOFT) 
+        if (Value > 21 && Shape == Shape.SOFT) 
         {
-            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            Hand hand = new Hand(Shape.HARD, Value - 10, false, false, false);
             return hand.CalculateDealerBust();
         }
 
-        if (value > 21) return 1;
-        if (value >= 17) return 0;
+        if (Value > 21) return 1;
+        if (Value >= 17) return 0;
         
         decimal probability = 0;
         for (int hit = 1; hit <= 10; hit++)
@@ -52,16 +52,16 @@ public record Hand
             return 0;
         }
 
-        if (value > 21 && shape == Shape.SOFT) 
+        if (Value > 21 && Shape == Shape.SOFT) 
         {
-            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            Hand hand = new Hand(Shape.HARD, Value - 10, false, false, false);
             return hand.CalculateDTP(target);
         }
 
-        if (value > 21) return 0;
-        if (value == target) return 1;
-        if (value > target) return 0;
-        if (value >= 17) return 0;
+        if (Value > 21) return 0;
+        if (Value == target) return 1;
+        if (Value > target) return 0;
+        if (Value >= 17) return 0;
         
         decimal probability = 0;
         for (int hit = 1; hit <= 10; hit++)
@@ -93,24 +93,24 @@ public record Hand
         }
 
         decimal ev;
-        if (blackjack)
+        if (Blackjack)
         {
             decimal push = dealer.ProbabilityBlackjack();
             decimal win = 1 - push;
             decimal lose = 0;
             ev = (win - lose) * 1.5m;
         }
-        else if (value == 21)
+        else if (Value == 21)
         {
-            decimal push = dealer.CalculateDTP(value) - dealer.ProbabilityBlackjack();
-            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
+            decimal push = dealer.CalculateDTP(Value) - dealer.ProbabilityBlackjack();
+            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(Value);
             decimal lose = 1 - push - win;
             ev = win - lose;
         }
         else 
         {
-            decimal push = dealer.CalculateDTP(value);
-            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
+            decimal push = dealer.CalculateDTP(Value);
+            decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(Value);
             decimal lose = 1 - push - win;
             ev = win - lose;
         }
@@ -121,13 +121,13 @@ public record Hand
     
     public decimal CalculatePHEV(Hand dealer)
     {
-        if (value > 21 && shape == Shape.SOFT) 
+        if (Value > 21 && Shape == Shape.SOFT) 
         {
-            Hand hand = new Hand(Shape.HARD, value - 10, false, false, false);
+            Hand hand = new Hand(Shape.HARD, Value - 10, false, false, false);
             return hand.CalculatePHEV(dealer);
         }
 
-        if (value > 21)
+        if (Value > 21)
         {
             return -1;
         }
@@ -147,7 +147,7 @@ public record Hand
 
     private decimal ProbabilityBlackjack()
     {
-        if (blackjack) return 1;
+        if (Blackjack) return 1;
         if (soloAce) return (decimal) 4 / 13;
         if (soloTen) return (decimal) 1 / 13;
         return 0;
@@ -155,8 +155,8 @@ public record Hand
 
     private Hand Hit(int hit)
     {
-        Shape newShape = shape == Shape.SOFT || hit == 1 ? Shape.SOFT : Shape.HARD;
-        int newValue = hit == 1 && shape == Shape.HARD ? value + 11 : value + hit;
+        Shape newShape = Shape == Shape.SOFT || hit == 1 ? Shape.SOFT : Shape.HARD;
+        int newValue = hit == 1 && Shape == Shape.HARD ? Value + 11 : Value + hit;
         bool isBlackjack = (soloAce && hit == 10) || (soloTen && hit == 1);
         return new Hand(newShape, newValue, false, false, isBlackjack);
     }
