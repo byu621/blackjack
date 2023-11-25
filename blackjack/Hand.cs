@@ -72,7 +72,7 @@ public record Hand
         return probability;
     }
 
-    public decimal CalculateDTPBelowTarget(int target)
+    private decimal CalculateDTPBelowTarget(int target)
     {
         decimal probability = 0;
         for (int i = 17; i < target; i++)
@@ -93,7 +93,8 @@ public record Hand
             decimal lose = 0;
             return (win - lose) * 1.5m;
         }
-        else if (value == 21)
+
+        if (value == 21)
         {
             decimal push = dealer.CalculateDTP(value) - dealer.ProbabilityBlackjack();
             decimal win = dealer.CalculateDealerBust() + dealer.CalculateDTPBelowTarget(value);
@@ -109,7 +110,7 @@ public record Hand
         }
     }
 
-    public decimal ProbabilityBlackjack()
+    private decimal ProbabilityBlackjack()
     {
         if (blackjack) return 1;
         if (soloAce) return (decimal) 4 / 13;
@@ -117,7 +118,7 @@ public record Hand
         return 0;
     }
 
-    public Hand Hit(int hit)
+    private Hand Hit(int hit)
     {
         Shape newShape = shape == Shape.SOFT || hit == 1 ? Shape.SOFT : Shape.HARD;
         int newValue = hit == 1 && shape == Shape.HARD ? value + 11 : value + hit;
