@@ -153,6 +153,13 @@ public record Hand
         return max;
     }
 
+    public Action CalculatePHSAction(Hand dealer)
+    {
+        decimal standEv = CalculatePSEV(dealer);
+        decimal hitEv = CalculatePHEV(dealer);
+        return standEv >= hitEv ? Action.S : Action.H;
+    }
+    
     private decimal ProbabilityBlackjack()
     {
         if (Blackjack) return 1;

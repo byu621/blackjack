@@ -7,5 +7,6 @@ internal class Program
         // DealerTotalRunnner.WriteToCsv();
         PlayerHitRunner.Print();
         PlayerHitRunner.WriteToCsv();
+        PlayerHitStandRunner.WriteToCsv();
     }
 }
