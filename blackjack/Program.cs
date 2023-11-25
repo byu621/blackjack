@@ -8,5 +8,6 @@ internal class Program
         PlayerHitRunner.Print();
         PlayerHitRunner.WriteToCsv();
         PlayerHitStandRunner.WriteToCsv();
+        PlayerDoubleRunner.WriteToCsv();
     }
 }

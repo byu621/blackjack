@@ -88,6 +88,11 @@ public record Hand
 
     public decimal CalculatePSEV(Hand dealer)
     {
+        if (Value > 21)
+        {
+            return -1;
+        }
+        
         if (PlayerStandCache.ContainsKey((this, dealer)))
         {
             return PlayerStandCache[(this, dealer)];
@@ -151,6 +156,25 @@ public record Hand
         decimal max = Math.Max(standEv, hitEv);
         PlayerHitCache[(this, dealer)] = max;
         return max;
+    }
+
+    public decimal CalculatePDEV(Hand dealer)
+    {
+        if (Value > 21)
+        {
+            throw new ArgumentException("ERROR");
+        }
+        
+        decimal ev = 0;
+        for (int hit = 1; hit <= 10; hit++)
+        {
+            decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
+            Hand hand = Hit(hit);
+            ev += hand.CalculatePSEV(dealer) * hitProbability;
+        }
+
+        ev *= 2;
+        return ev;
     }
 
     public Action CalculatePHSAction(Hand dealer)
