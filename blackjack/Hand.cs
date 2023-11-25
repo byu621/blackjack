@@ -136,11 +136,12 @@ public record Hand
         decimal ev = 0;
         for (int hit = 1; hit <= 10; hit++)
         {
+            decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
             Hand hand = Hit(hit);
-            ev += hand.CalculatePHEV(dealer);
+            ev += hand.CalculatePHEV(dealer) * hitProbability;
         }
 
-        decimal hitEv = ev / 10;
+        decimal hitEv = ev;
         return Math.Max(standEv, hitEv);
     }
 
