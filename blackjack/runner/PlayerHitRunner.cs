@@ -23,13 +23,17 @@ public static class PlayerHitRunner
         List<Hand> playerHands = new()
         {
             new Hand(Shape.SOFT, 21, false, false, true),
-            new Hand(Shape.HARD, 21, false, false, false),
-            new Hand(Shape.HARD, 20, false, false, false),
-            new Hand(Shape.HARD, 19, false, false, false),
-            new Hand(Shape.HARD, 18, false, false, false),
-            new Hand(Shape.HARD, 17, false, false, false),
-            new Hand(Shape.HARD, 16, false, false, false),
         };
+
+        for (int i = 21; i >= 4; i--)
+        {
+            playerHands.Add(new Hand(Shape.HARD, i, false, false, false));
+        }
+        
+        for (int i = 21; i >= 13; i--)
+        {
+            playerHands.Add(new Hand(Shape.SOFT, i, false, false, false));
+        }
 
         StringBuilder sb = new();
         sb.AppendLine("#,A,10,9,8,7,6,5,4,3,2");
