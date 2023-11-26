@@ -1,5 +1,9 @@
 # Blackjack
 
+## 0. Dealer BJ Ev
+What is player Ev given the dealer has blackjack? \
+[data](data/DealerBlackjack.csv)
+
 
 ## 1. Dealer Total
 What are the odds the dealer ends up with `17` `18` `19` `20` `21` or `bust` given their current hand? 
@@ -14,6 +18,7 @@ What is player Ev given the player can hit or stand? [data](data/PlayerHitEv.csv
 ## Rules
 - S17 -> Dealer stands on soft 17
 - 3:2 -> Blackjack pays 3 to 2
+- 6 Deck -> 6 decks are used
 
 ## Glossary
 - Hard -> If a hand has an ace, it's classed as a hard hand when the ace counts as 1

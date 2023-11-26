@@ -23,6 +23,12 @@ public record Hand
         this.soloTen = soloTen;
         Blackjack = blackjack;
     }
+    
+    public decimal CalculateDealerBJEV()
+    {
+        if (Blackjack) return 0;
+        return -1;
+    }
 
     public decimal CalculateDealerBust()
     {
