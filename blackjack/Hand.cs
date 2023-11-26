@@ -168,11 +168,13 @@ public record Hand
         decimal ev = 0;
         for (int hit = 1; hit <= 10; hit++)
         {
-            decimal hitProbability = hit == 10 ? (decimal) 4 / 13 : (decimal) 1 / 13;
+            decimal frequency = hit == 10 ? 4m : 1m;
             Hand hand = Hit(hit);
-            ev += hand.CalculatePSEV(dealer) * hitProbability;
+            decimal standEv = hand.CalculatePSEV(dealer);
+            ev += standEv * frequency;
         }
 
+        ev /= 13;
         ev *= 2;
         return ev;
     }
@@ -194,8 +196,16 @@ public record Hand
 
     private Hand Hit(int hit)
     {
-        Shape newShape = Shape == Shape.SOFT || hit == 1 ? Shape.SOFT : Shape.HARD;
-        int newValue = hit == 1 && Shape == Shape.HARD ? Value + 11 : Value + hit;
+        int hitA = hit == 1 && Shape == Shape.HARD && Value < 11 ? 11 : hit;
+        int newValue = Value + hitA;
+        
+        Shape newShape = Shape == Shape.SOFT || hitA == 11 ? Shape.SOFT : Shape.HARD;
+
+        if (newValue > 21 && newShape == Shape.SOFT)
+        {
+            newValue -= 10;
+            newShape = Shape.HARD;
+        }
         bool isBlackjack = (soloAce && hit == 10) || (soloTen && hit == 1);
         return new Hand(newShape, newValue, false, false, isBlackjack);
     }
