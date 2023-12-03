@@ -2,11 +2,11 @@ namespace blackjack;
 
 public record Card
 {
-    private readonly int value;
+    public int Value {get;}
 
-    public Card(int value )
+    public Card(int value)
     {
-        this.value = value;
+        Value = value;
     }
 }
 

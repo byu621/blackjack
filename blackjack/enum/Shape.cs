@@ -2,5 +2,5 @@ namespace blackjack;
 
 public enum Shape
 {
-    SOFT, HARD
+    HARD, SOFT
 }
