@@ -7,13 +7,18 @@ public class Shoe
 
     public Shoe(int numDecks)
     {
-        for (int i = 0; i < CardCount(numDecks); i++)
+        Card[] array = new Card[CardCount(numDecks)];
+        for (int i = 0; i < array.Length; i++)
         {
             int iMod13 = i % 13 + 1;
             int value = iMod13 >= 10 ? 10 : iMod13;
-            cards.Push(new Card(value));
+            array[i] = new(value);
         }
 
+        Random random = new Random();
+        random.Shuffle(array);
+
+        cards = new Stack<Card>(array);
         this.numDecks = numDecks;
     }
 
