@@ -10,8 +10,5 @@ internal static class Program
 
         Simulation simulation = new(numDecksInShoe, replay, penetration);
         simulation.Simulate();
-
-        // Hand hand = new Hand();
-        // hand.Hit(new Card(10));
     }
 }
