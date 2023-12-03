@@ -21,8 +21,8 @@ public class Hand
 
         Value = value;
         Shape = shape;
-        this.SoloTen = soloTen;
-        this.SoloAce = soloAce;
+        SoloTen = soloTen;
+        SoloAce = soloAce;
         Blackjack = blackjack;
     }
 
@@ -33,7 +33,7 @@ public class Hand
         Shape shape = Shape == Shape.SOFT || cardValue == 11 ? Shape.SOFT : Shape.HARD;
         bool soloTen = Value == 0 && card.Value == 10;
         bool soloAce = Value == 0 && card.Value == 1;
-        bool blackjack = this.SoloTen && card.Value == 1 || this.SoloAce && card.Value == 10;
+        bool blackjack = SoloTen && card.Value == 1 || SoloAce && card.Value == 10;
 
         if (value > 21 && shape == Shape.SOFT)
         {
