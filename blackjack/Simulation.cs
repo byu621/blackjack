@@ -27,10 +27,11 @@ public class Simulation
     public decimal Simulate()
     {
         Shoe shoe = new Shoe(numDecksInShoe);
-        int playerWin = 0;
-        int playerLose = 0;
+        decimal runningEv = 0;
+        int count = 0;
         while (shoe.isLive(penetration))
         {
+            count++;
             Hand dealer = new();
             (dealer, _) = dealer.Hit(shoe.Pop());
             (dealer, _) = dealer.Hit(shoe.Pop());
@@ -46,13 +47,13 @@ public class Simulation
 
             if (player.Blackjack)
             {
-                playerWin += 1;
+                runningEv += 1.5m;
                 continue;
             }
             
             if (dealer.Blackjack)
             {
-                playerLose += 1;
+                runningEv -= 1;
                 continue;
             }
 
@@ -63,7 +64,7 @@ public class Simulation
             }
 
             if (dealerBust || dealer.Value < player.Value) {
-                playerWin += 1;
+                runningEv += 1;
                 continue;
             }
 
@@ -74,18 +75,13 @@ public class Simulation
 
             if (dealer.Value > player.Value)
             {
-                playerLose += 1;
+                runningEv -= 1;
                 continue;
             }
 
             throw new ArgumentException();
         }
 
-        int total = playerWin + playerLose;
-        if (total == 0) return 0;
-        decimal winPercentage = (decimal) playerWin / total;
-        decimal losePercentage = 1 - winPercentage;
-        decimal ev = winPercentage - losePercentage;
-        return ev;
+        return runningEv/count;
     }
 }
