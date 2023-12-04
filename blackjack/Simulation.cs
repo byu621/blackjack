@@ -4,11 +4,13 @@ public class Simulation
 {
     private readonly int numDecksInShoe;
     private readonly int penetration;
+    private readonly StandTable standTable;
 
     public Simulation(int numDecksInShoe, int penetration)
     {
         this.numDecksInShoe = numDecksInShoe;
         this.penetration = penetration;
+        standTable = new();
     }
 
     public decimal SimulateStand(int replay)
@@ -16,13 +18,14 @@ public class Simulation
         decimal ev = 0;
         for (int i = 0; i < replay; i++)
         {
-            ev += Simulate();
+            ev += SimulateStand();
         }
 
+        System.Console.WriteLine(standTable.ToString());
         return ev/replay;
     }
 
-    public decimal Simulate()
+    public decimal SimulateStand()
     {
         Shoe shoe = new Shoe(numDecksInShoe);
         decimal runningEv = 0;
@@ -31,27 +34,20 @@ public class Simulation
         {
             count++;
             Hand dealer = new();
-            (dealer, _) = dealer.Hit(shoe.Pop());
+            Card dealerUpCard = shoe.Pop();
+            (dealer, _) = dealer.Hit(dealerUpCard);
             (dealer, _) = dealer.Hit(shoe.Pop());
 
             Hand player = new();
             (player, _) = player.Hit(shoe.Pop());
             (player, _) = player.Hit(shoe.Pop());
 
-            if (player.Blackjack && dealer.Blackjack)
+            bool isBlackjack;
+            decimal ev;
+            (isBlackjack, ev) = player.EvaluateBlackjack(dealer);
+            if (isBlackjack)
             {
-                continue;
-            }
-
-            if (player.Blackjack)
-            {
-                runningEv += 1.5m;
-                continue;
-            }
-            
-            if (dealer.Blackjack)
-            {
-                runningEv -= 1;
+                runningEv += ev;
                 continue;
             }
 
@@ -61,23 +57,9 @@ public class Simulation
                 (dealer, dealerBust) = dealer.Hit(shoe.Pop());
             }
 
-            if (dealerBust || dealer.Value < player.Value) {
-                runningEv += 1;
-                continue;
-            }
-
-            if (dealer.Value == player.Value)
-            {
-                continue;
-            }
-
-            if (dealer.Value > player.Value)
-            {
-                runningEv -= 1;
-                continue;
-            }
-
-            throw new ArgumentException();
+            ev = player.EvaluateHand(dealer, dealerBust);
+            runningEv += ev;
+            standTable.Add(dealerUpCard, player, ev);
         }
 
         return runningEv/count;
