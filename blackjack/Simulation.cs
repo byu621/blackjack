@@ -11,7 +11,7 @@ public class Simulation
         this.penetration = penetration;
     }
 
-    public decimal Simulate(int replay)
+    public decimal SimulateStand(int replay)
     {
         decimal ev = 0;
         for (int i = 0; i < replay; i++)

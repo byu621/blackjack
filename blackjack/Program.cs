@@ -12,7 +12,7 @@ internal static class Program
         for (int i = 0; i < replay2; i++)
         {
             Simulation simulation = new(numDecksInShoe, penetration);
-            decimal ev = simulation.Simulate(replay);
+            decimal ev = simulation.SimulateStand(replay);
             Console.WriteLine(ev);
         }
     }
