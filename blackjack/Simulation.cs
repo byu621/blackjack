@@ -3,13 +3,11 @@ namespace blackjack;
 public class Simulation
 {
     private readonly int numDecksInShoe;
-    private readonly int replay;
     private readonly int penetration;
 
-    public Simulation(int numDecksInShoe, int replay, int penetration)
+    public Simulation(int numDecksInShoe, int penetration)
     {
         this.numDecksInShoe = numDecksInShoe;
-        this.replay = replay;
         this.penetration = penetration;
     }
 
