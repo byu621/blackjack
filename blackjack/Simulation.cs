@@ -28,7 +28,6 @@ public class Simulation
     {
         Shoe shoe = new Shoe(numDecksInShoe);
         int playerWin = 0;
-        int playerPush = 0;
         int playerLose = 0;
         while (shoe.isLive(penetration))
         {
@@ -42,7 +41,6 @@ public class Simulation
 
             if (player.Blackjack && dealer.Blackjack)
             {
-                playerPush += 1;
                 continue;
             }
 
@@ -71,7 +69,6 @@ public class Simulation
 
             if (dealer.Value == player.Value)
             {
-                playerPush += 1;
                 continue;
             }
 
@@ -84,7 +81,9 @@ public class Simulation
             throw new ArgumentException();
         }
 
-        decimal winPercentage = (decimal) playerWin / (playerWin + playerLose);
+        int total = playerWin + playerLose;
+        if (total == 0) return 0;
+        decimal winPercentage = (decimal) playerWin / total;
         decimal losePercentage = 1 - winPercentage;
         decimal ev = winPercentage - losePercentage;
         return ev;
