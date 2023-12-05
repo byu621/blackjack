@@ -13,19 +13,19 @@ public class Simulation
         standTable = new();
     }
 
-    public decimal SimulateStand(int replay)
+    public decimal SimulateStand(int numShoe)
     {
         decimal ev = 0;
-        for (int i = 0; i < replay; i++)
+        for (int i = 0; i < numShoe; i++)
         {
             ev += SimulateStand();
         }
 
-        System.Console.WriteLine(standTable.ToString());
-        return ev/replay;
+        Console.WriteLine(standTable.ToString());
+        return ev/numShoe;
     }
 
-    public decimal SimulateStand()
+    private decimal SimulateStand()
     {
         Shoe shoe = new Shoe(numDecksInShoe);
         decimal runningEv = 0;
