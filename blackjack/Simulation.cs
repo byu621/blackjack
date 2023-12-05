@@ -13,7 +13,7 @@ public class Simulation
         standTable = new();
     }
 
-    public decimal SimulateStand(int numShoe)
+    public (decimal, StandTable) SimulateStand(int numShoe)
     {
         decimal ev = 0;
         for (int i = 0; i < numShoe; i++)
@@ -21,8 +21,7 @@ public class Simulation
             ev += SimulateStand();
         }
 
-        Console.WriteLine(standTable.ToString());
-        return ev/numShoe;
+        return (ev/numShoe, standTable);
     }
 
     private decimal SimulateStand()
