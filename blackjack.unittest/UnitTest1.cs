@@ -41,4 +41,20 @@ public class UnitTest1
         Assert.Equal(Shape.SOFT, hand.Shape);
         Assert.True(hand.Blackjack);
     }
+
+    [Fact]
+    public void TestUpCard()
+    {
+        Hand hand = new Hand();
+        (hand, _) = hand.Hit(new(1));
+        Assert.Equal(1, hand.UpCard!.Value);
+    }
+
+    [Fact]
+    public void TestShoeDeal()
+    {
+        Shoe shoe = new Shoe(6);
+        Hand hand = shoe.Deal();
+        Assert.NotNull(hand.UpCard);
+    }
 }

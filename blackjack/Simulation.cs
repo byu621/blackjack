@@ -33,11 +33,8 @@ public class Simulation
         while (shoe.isLive(penetration))
         {
             count++;
-            Hand dealer = new();
-            Card dealerUpCard = shoe.Pop();
-            (dealer, _) = dealer.Hit(dealerUpCard);
-            (dealer, _) = dealer.Hit(shoe.Pop());
-
+            Hand dealer = shoe.Deal();
+            Card dealerUpCard = dealer.UpCard!;
             Hand player = shoe.Deal();
 
             bool isBlackjack;
