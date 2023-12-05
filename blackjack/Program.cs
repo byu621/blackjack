@@ -5,7 +5,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         int numDecksInShoe = 6;
-        int numShoe = 100000;
+        int numShoe = 10000;
         int penetration = 80;
 
         SimulationStand simulationStand = new(numDecksInShoe, penetration);
@@ -13,5 +13,10 @@ internal static class Program
 
         Console.WriteLine(standTable.ToString());
         Console.WriteLine((standEv * 100).ToString("0.00") + "%");
+
+        SimulationHit simulationHit = new(numDecksInShoe, penetration, standTable);
+        (decimal hitEv, _) = simulationHit.SimulateHit(numShoe);
+
+        System.Console.WriteLine((hitEv * 100).ToString("0.00") + "%");
     }
 }
