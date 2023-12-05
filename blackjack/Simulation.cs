@@ -38,9 +38,7 @@ public class Simulation
             (dealer, _) = dealer.Hit(dealerUpCard);
             (dealer, _) = dealer.Hit(shoe.Pop());
 
-            Hand player = new();
-            (player, _) = player.Hit(shoe.Pop());
-            (player, _) = player.Hit(shoe.Pop());
+            Hand player = shoe.Deal();
 
             bool isBlackjack;
             decimal ev;

@@ -28,6 +28,14 @@ public class Shoe
         return card;
     }
 
+    public Hand Deal()
+    {
+        Hand hand = new Hand();
+        (hand, _) = hand.Hit(Pop());
+        (hand, _) = hand.Hit(Pop());
+        return hand;
+    }
+
     private int CardCount(int numDecks)
     {
         return numDecks * 13 * 4;
