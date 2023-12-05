@@ -1,12 +1,12 @@
 namespace blackjack;
 
-public class Simulation
+public class SimulationStand
 {
     private readonly int numDecksInShoe;
     private readonly int penetration;
     private readonly StandTable standTable;
 
-    public Simulation(int numDecksInShoe, int penetration)
+    public SimulationStand(int numDecksInShoe, int penetration)
     {
         this.numDecksInShoe = numDecksInShoe;
         this.penetration = penetration;
