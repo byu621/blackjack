@@ -37,9 +37,7 @@ public class Simulation
             Card dealerUpCard = dealer.UpCard!;
             Hand player = shoe.Deal();
 
-            bool isBlackjack;
-            decimal ev;
-            (isBlackjack, ev) = player.EvaluateBlackjack(dealer);
+            (bool isBlackjack, decimal ev) = player.EvaluateBlackjack(dealer);
             if (isBlackjack)
             {
                 runningEv += ev;
