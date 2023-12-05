@@ -44,11 +44,7 @@ public class Simulation
                 continue;
             }
 
-            bool dealerBust = false;
-            while (!dealerBust && dealer.Value < 17)
-            {
-                (dealer, dealerBust) = dealer.Hit(shoe.Pop());
-            }
+            (dealer, bool dealerBust) = shoe.DealerHit(dealer);
 
             ev = player.EvaluateHand(dealer, dealerBust);
             runningEv += ev;

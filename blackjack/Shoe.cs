@@ -36,6 +36,17 @@ public class Shoe
         return hand;
     }
 
+    public (Hand, bool) DealerHit(Hand dealer)
+    {
+        bool dealerBust = false;
+        while (!dealerBust && dealer.Value < 17)
+        {
+            (dealer, dealerBust) = dealer.Hit(Pop());
+        }
+
+        return (dealer, dealerBust);
+    }
+
     private int CardCount(int numDecks)
     {
         return numDecks * 13 * 4;
