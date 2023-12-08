@@ -1,8 +1,10 @@
 namespace blackjack;
 
-public class SimulationHit(int numDecksInShoe, int penetration, StandTable standTable)
+public class SimulationHit(int numDecksInShoe, int penetration)
 {
-    public decimal SimulateHit(int numShoe)
+    private readonly HitTable _hitTable = new();
+
+    public (decimal, HitTable) SimulateHit(int numShoe)
     {
         decimal ev = 0;
         for (int i = 0; i < numShoe; i++)
@@ -10,7 +12,7 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
             ev += SimulateHit();
         }
 
-        return ev/numShoe;
+        return (ev/numShoe, _hitTable);
     }
 
     private decimal SimulateHit()
@@ -22,6 +24,7 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
         {
             count++;
             Hand dealer = shoe.Deal();
+            Card dealerUpCard = dealer.UpCard!;
             Hand player = shoe.Deal();
 
             (bool isBlackjack, decimal ev) = player.EvaluateBlackjack(dealer);
@@ -35,6 +38,7 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
 
             ev = player.EvaluateHand(dealer, dealerBust);
             runningEv += ev;
+            _hitTable.Add(dealerUpCard, player, ev);
         }
 
         return runningEv/count;
