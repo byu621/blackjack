@@ -15,8 +15,8 @@ internal static class Program
         Console.WriteLine((standEv * 100).ToString("0.00") + "%");
 
         SimulationHit simulationHit = new(numDecksInShoe, penetration, standTable);
-        (decimal hitEv, _) = simulationHit.SimulateHit(numShoe);
+        decimal hitEv = simulationHit.SimulateHit(numShoe);
 
-        System.Console.WriteLine((hitEv * 100).ToString("0.00") + "%");
+        Console.WriteLine((hitEv * 100).ToString("0.00") + "%");
     }
 }

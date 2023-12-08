@@ -1,19 +1,8 @@
 namespace blackjack;
 
-public class SimulationHit
+public class SimulationHit(int numDecksInShoe, int penetration, StandTable standTable)
 {
-    private readonly int numDecksInShoe;
-    private readonly int penetration;
-    private readonly StandTable standTable;
-
-    public SimulationHit(int numDecksInShoe, int penetration, StandTable standTable)
-    {
-        this.numDecksInShoe = numDecksInShoe;
-        this.penetration = penetration;
-        this.standTable = standTable;
-    }
-
-    public (decimal, StandTable) SimulateHit(int numShoe)
+    public decimal SimulateHit(int numShoe)
     {
         decimal ev = 0;
         for (int i = 0; i < numShoe; i++)
@@ -21,7 +10,7 @@ public class SimulationHit
             ev += SimulateHit();
         }
 
-        return (ev/numShoe, standTable);
+        return ev/numShoe;
     }
 
     private decimal SimulateHit()
