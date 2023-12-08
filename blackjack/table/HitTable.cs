@@ -30,6 +30,17 @@ public class HitTable
         _count[row, column] += 1;
     }
 
+    public decimal Get(Card dealerCard, Hand player)
+    {
+        if (player.Value >= 21) throw new ArgumentException();
+        if (player is { Shape: Shape.HARD, Value: <= 3 }) throw new ArgumentException();
+        if (player is { Shape: Shape.SOFT, Value: <= 11 }) throw new ArgumentException();
+        
+        int column = dealerCard.Value == 1 ? 0 : 11 - dealerCard.Value;
+        int row = player.Shape == Shape.HARD ? 20 - player.Value : 20 - player.Value + 17;
+        return _table[row, column];
+    }
+
     public override string ToString()
     {
         StringBuilder stringBuilder = new StringBuilder();
