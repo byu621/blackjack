@@ -23,6 +23,13 @@ public class StandTable
         table[row, column] += ev; 
         count[row, column] += 1;
     }
+    
+    public decimal Get(Card dealerCard, Hand player)
+    {
+        int column = dealerCard.Value == 1 ? 0 : 11 - dealerCard.Value;
+        int row = player.Value <= 16 ? 4 : 20 - player.Value;
+        return table[row, column];
+    }
 
     public override string ToString()
     {
