@@ -19,5 +19,11 @@ internal static class Program
         
         Console.WriteLine(hitTable.ToString());
         Console.WriteLine((hitEv * 100).ToString("0.00") + "%");
+
+        SimulationDouble simulationDouble = new(numDecksInShoe, penetration, standTable);
+        (decimal doubleEv, HitTable doubleTable) = simulationDouble.SimulateDouble(numShoe);
+
+        Console.WriteLine(doubleTable.ToString());
+        Console.WriteLine((doubleEv * 100).ToString("0.00") + "%");
     }
 }
