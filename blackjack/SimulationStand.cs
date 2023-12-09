@@ -1,17 +1,8 @@
 namespace blackjack;
 
-public class SimulationStand
+public class SimulationStand(int numDecksInShoe, int penetration)
 {
-    private readonly int numDecksInShoe;
-    private readonly int penetration;
-    private readonly StandTable standTable;
-
-    public SimulationStand(int numDecksInShoe, int penetration)
-    {
-        this.numDecksInShoe = numDecksInShoe;
-        this.penetration = penetration;
-        standTable = new();
-    }
+    private readonly StandTable _standTable = new();
 
     public (decimal, StandTable) SimulateStand(int numShoe)
     {
@@ -21,7 +12,7 @@ public class SimulationStand
             ev += SimulateStand();
         }
 
-        return (ev/numShoe, standTable);
+        return (ev/numShoe, _standTable);
     }
 
     private decimal SimulateStand()
@@ -47,7 +38,7 @@ public class SimulationStand
 
             ev = player.EvaluateHand(dealer, dealerBust);
             runningEv += ev;
-            standTable.Add(dealerUpCard, player, ev);
+            _standTable.Add(dealerUpCard, player, ev);
         }
 
         return runningEv/count;
