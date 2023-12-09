@@ -28,7 +28,7 @@ public class StandTable
     {
         int column = dealerCard.Value == 1 ? 0 : 11 - dealerCard.Value;
         int row = player.Value <= 16 ? 4 : 20 - player.Value;
-        return table[row, column];
+        return count[row, column] == 0 ? table[row, column] : table[row, column] / count[row, column];
     }
 
     public override string ToString()
