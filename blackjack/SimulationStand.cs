@@ -24,7 +24,7 @@ public class SimulationStand(int numDecksInShoe, int penetration)
         {
             count++;
             Hand dealer = shoe.Deal();
-            Card dealerUpCard = dealer.UpCard!;
+            Card dealerUpCard = dealer.FirstCard!;
             Hand player = shoe.Deal();
 
             (bool isBlackjack, decimal ev) = player.EvaluateBlackjack(dealer);

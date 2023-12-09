@@ -1,21 +1,21 @@
 ﻿namespace blackjack;
 
-public class SimulationDouble(int numDecksInShoe, int penetration, StandTable standTable)
+public class SimulationSplit(int numDecksInShoe, int penetration, StandTable standTable)
 {
-    private readonly HitTable _doubleTable = new("double");
+    private readonly HitTable _splitTable = new("split");
     
-    public (decimal, HitTable) SimulateDouble(int numShoe)
+    public (decimal, HitTable) SimulateSplit(int numShoe)
     {
         decimal ev = 0;
         for (int i = 0; i < numShoe; i++)
         {
-            ev += SimulateDouble();
+            ev += SimulateSplit();
         }
 
-        return (ev/numShoe, _doubleTable);
+        return (ev/numShoe, _splitTable);
     }
 
-    private decimal SimulateDouble()
+    private decimal SimulateSplit()
     {
         Shoe shoe = new Shoe(numDecksInShoe);
         decimal runningEv = 0;
@@ -26,7 +26,7 @@ public class SimulationDouble(int numDecksInShoe, int penetration, StandTable st
             Hand dealer = shoe.Deal();
             Card dealerUpCard = dealer.FirstCard!;
             Hand player = shoe.Deal();
-
+            
             (bool isBlackjack, decimal blackjackEv) = player.EvaluateBlackjack(dealer);
             if (isBlackjack)
             {
@@ -38,7 +38,7 @@ public class SimulationDouble(int numDecksInShoe, int penetration, StandTable st
             if (playerBust)
             {
                 runningEv += -2m;
-                _doubleTable.Add(dealerUpCard, player, -2m);
+                _splitTable.Add(dealerUpCard, player, -2m);
                 continue;
             }
             
@@ -47,13 +47,13 @@ public class SimulationDouble(int numDecksInShoe, int penetration, StandTable st
                 (dealer, bool dealerBust) = shoe.DealerHit(dealer);
                 decimal ev = playerHit.EvaluateHand(dealer, dealerBust) * 2;
                 runningEv += ev;
-                _doubleTable.Add(dealerUpCard, player, ev);
+                _splitTable.Add(dealerUpCard, player, ev);
                 continue;
             }
             
             decimal standEv = standTable.Get(dealerUpCard, playerHit) * 2;
             runningEv += standEv;
-            _doubleTable.Add(dealerUpCard, player, standEv);
+            _splitTable.Add(dealerUpCard, player, standEv);
         }
 
         return runningEv/count;

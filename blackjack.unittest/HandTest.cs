@@ -47,6 +47,6 @@ public class HandTest
     {
         Hand hand = new Hand();
         (hand, _) = hand.Hit(new(1));
-        Assert.Equal(1, hand.UpCard!.Value);
+        Assert.Equal(1, hand.FirstCard!.Value);
     }
 }

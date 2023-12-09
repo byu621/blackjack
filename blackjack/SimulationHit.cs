@@ -50,7 +50,7 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
         while (shoe.isLive(penetration))
         {
             Hand dealer = shoe.Deal();
-            Card dealerUpCard = dealer.UpCard!;
+            Card dealerUpCard = dealer.FirstCard!;
             Hand player = shoe.Deal();
 
             if (player.Value != value || player.Shape != shape) continue;

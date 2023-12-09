@@ -7,6 +7,6 @@ public class ShoeTest
     {
         Shoe shoe = new Shoe(6);
         Hand hand = shoe.Deal();
-        Assert.NotNull(hand.UpCard);
+        Assert.NotNull(hand.FirstCard);
     }
 }

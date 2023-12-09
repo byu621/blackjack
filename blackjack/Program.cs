@@ -19,5 +19,9 @@ internal static class Program
         SimulationDouble simulationDouble = new(numDecksInShoe, penetration, standTable);
         (_, HitTable doubleTable) = simulationDouble.SimulateDouble(numShoe);
         doubleTable.WriteToFile();
+
+        SimulationSplit simulationSplit = new(numDecksInShoe, penetration, standTable);
+        (_, HitTable splitTable) = simulationSplit.SimulateSplit(numShoe);
+        splitTable.WriteToFile();
     }
 }

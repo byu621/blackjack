@@ -7,13 +7,13 @@ public class Hand
     public bool SoloTen { get; }
     public bool SoloAce {get;}
     public bool Blackjack { get; }
-    public Card? UpCard { get; }
+    public Card? FirstCard { get; }
 
     public Hand()    
     {
     }
 
-    private Hand(int value, Shape shape, bool soloTen, bool soloAce, bool blackjack, Card? upCard)
+    private Hand(int value, Shape shape, bool soloTen, bool soloAce, bool blackjack, Card? firstCard)
     {
         if (value > 21) throw new ArgumentException();
         if (soloTen && value != 10) throw new ArgumentException();
@@ -25,7 +25,7 @@ public class Hand
         SoloTen = soloTen;
         SoloAce = soloAce;
         Blackjack = blackjack;
-        UpCard = upCard;
+        FirstCard = firstCard;
     }
 
     public (Hand, bool) Hit(Card card)
@@ -36,7 +36,7 @@ public class Hand
         bool soloTen = Value == 0 && card.Value == 10;
         bool soloAce = Value == 0 && card.Value == 1;
         bool blackjack = SoloTen && card.Value == 1 || SoloAce && card.Value == 10;
-        Card? upCard = Value == 0 ? card : UpCard;
+        Card? firstCard = Value == 0 ? card : FirstCard;
 
         if (value > 21 && shape == Shape.SOFT)
         {
@@ -49,7 +49,7 @@ public class Hand
             return (new(), true);
         }
 
-        return (new (value, shape, soloTen, soloAce, blackjack, upCard), false);
+        return (new (value, shape, soloTen, soloAce, blackjack, firstCard), false);
     }
 
     public (bool, decimal) EvaluateBlackjack(Hand dealer)
