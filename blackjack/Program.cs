@@ -5,7 +5,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         int numDecksInShoe = 6;
-        int numShoe = 1000000;
+        int numShoe = 10_000_000;
         int penetration = 80;
 
         SimulationStand simulationStand = new(numDecksInShoe, penetration);
