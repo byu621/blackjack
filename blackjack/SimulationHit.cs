@@ -7,15 +7,17 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
     public (decimal, HitTable) SimulateHit(int numShoe)
     {
         decimal ev = 0;
-        for (int value = 20; value >= 19; value--)
+        int count = 0;
+        for (int value = 20; value >= 11; value--)
         {
             for (int i = 0; i < numShoe; i++)
             {
                 ev += SimulateHit(value, Shape.HARD);
+                count++;
             }
         }
 
-        return (ev/numShoe/2, _hitTable);
+        return (ev/count, _hitTable);
     }
 
     private decimal SimulateHit(int value, Shape shape)
@@ -32,38 +34,36 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
             if (player.Value != value || player.Shape != shape) continue;
             count++;
 
-            (bool isBlackjack, decimal ev) = player.EvaluateBlackjack(dealer);
+            (bool isBlackjack, decimal blackjackEv) = player.EvaluateBlackjack(dealer);
             if (isBlackjack)
             {
-                runningEv += ev;
+                runningEv += blackjackEv;
                 continue;
             }
 
-            (Hand playerHand, bool playerBust) = player.Hit(shoe.Pop());
+            (Hand playerHit, bool playerBust) = player.Hit(shoe.Pop());
             if (playerBust)
             {
-                ev = -1;
-                runningEv += ev;
-                _hitTable.Add(dealerUpCard, player, ev);
+                runningEv += -1m;
+                _hitTable.Add(dealerUpCard, player, -1m);
                 continue;
             }
             
-            if (playerHand.Value == 21)
+            if (playerHit.Value == 21)
             {
                 (dealer, bool dealerBust) = shoe.DealerHit(dealer);
-                ev = player.EvaluateHand(dealer, dealerBust);
+                decimal ev = playerHit.EvaluateHand(dealer, dealerBust);
                 runningEv += ev;
                 _hitTable.Add(dealerUpCard, player, ev);
                 continue;
             }
 
-            decimal standEv = standTable.Get(dealerUpCard, playerHand);
-            decimal hitEv = _hitTable.Get(dealerUpCard, playerHand);
+            decimal standEv = standTable.Get(dealerUpCard, playerHit);
+            decimal hitEv = _hitTable.Get(dealerUpCard, playerHit);
             if (hitEv == 0) throw new Exception("What");
-
             decimal maxEv = Math.Max(standEv, hitEv);
             runningEv += maxEv;
-            _hitTable.Add(dealerUpCard, player, ev);
+            _hitTable.Add(dealerUpCard, player, maxEv);
         }
 
         return count == 0 ? runningEv : runningEv/count;

@@ -38,7 +38,7 @@ public class HitTable
         
         int column = dealerCard.Value == 1 ? 0 : 11 - dealerCard.Value;
         int row = player.Shape == Shape.HARD ? 20 - player.Value : 20 - player.Value + 17;
-        return _table[row, column];
+        return _count[row, column] == 0 ? _table[row, column] : _table[row, column]/_count[row, column];
     }
 
     public override string ToString()
