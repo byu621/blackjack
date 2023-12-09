@@ -8,16 +8,38 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
     {
         decimal ev = 0;
         int count = 0;
-        for (int value = 20; value >= 11; value--)
+        for (int value = 20; value >= 10; value--)
         {
-            for (int i = 0; i < numShoe; i++)
-            {
-                ev += SimulateHit(value, Shape.HARD);
-                count++;
-            }
+            ev += SimulateNumShoe(numShoe, value, Shape.HARD);
+            count++;
+        }
+
+        for (int value = 20; value >= 12; value--)
+        {
+            ev += SimulateNumShoe(numShoe, value, Shape.SOFT);
+            count++;
+        }
+        
+        for (int value = 9; value >= 4; value--)
+        {
+            ev += SimulateNumShoe(numShoe, value, Shape.HARD);
+            count++;
         }
 
         return (ev/count, _hitTable);
+    }
+    
+    private decimal SimulateNumShoe(int numShoe, int value, Shape shape)
+    {
+        decimal ev = 0;
+        int count = 0;
+        for (int i = 0; i < numShoe; i++)
+        {
+            ev += SimulateHit(value, shape);
+            count++;
+        }
+
+        return count == 0 ? ev : ev / count;
     }
 
     private decimal SimulateHit(int value, Shape shape)
@@ -60,7 +82,7 @@ public class SimulationHit(int numDecksInShoe, int penetration, StandTable stand
 
             decimal standEv = standTable.Get(dealerUpCard, playerHit);
             decimal hitEv = _hitTable.Get(dealerUpCard, playerHit);
-            if (hitEv == 0) throw new Exception("What");
+            if (hitEv == 0) throw new Exception("HitEv is 0");
             decimal maxEv = Math.Max(standEv, hitEv);
             runningEv += maxEv;
             _hitTable.Add(dealerUpCard, player, maxEv);
