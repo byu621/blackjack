@@ -2,7 +2,7 @@
 
 public class SimulationDouble(int numDecksInShoe, int penetration, StandTable standTable)
 {
-    private readonly HitTable _doubleTable = new();
+    private readonly HitTable _doubleTable = new("double");
     
     public (decimal, HitTable) SimulateDouble(int numShoe)
     {

@@ -8,9 +8,11 @@ public class HitTable
     private readonly List<string> _rows; 
     private readonly decimal[,] _table;
     private readonly int[,] _count;
+    private readonly string _description;
 
-    public HitTable()
+    public HitTable(string description)
     {
+        _description = description;
         _rows = new();
         for (int i = 20; i >= 4; i--) _rows.Add($"H{i}");
         for (int i = 20; i >= 12; i--) _rows.Add($"S{i}");
@@ -74,5 +76,11 @@ public class HitTable
         decimal ev = _table[row, column];
         int count = _count[row, column] == 0 ? 1 : _count[row, column];
         return (ev / count * 100).ToString("0.00") + "%";
+    }
+    
+    public void WriteToFile()
+    {
+        using StreamWriter writer = new StreamWriter($"data/{_description}.csv", false);
+        writer.Write(ToString());
     }
 }

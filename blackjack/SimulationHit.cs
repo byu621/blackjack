@@ -2,7 +2,7 @@ namespace blackjack;
 
 public class SimulationHit(int numDecksInShoe, int penetration, StandTable standTable)
 {
-    private readonly HitTable _hitTable = new();
+    private readonly HitTable _hitTable = new("hit");
 
     public (decimal, HitTable) SimulateHit(int numShoe)
     {
