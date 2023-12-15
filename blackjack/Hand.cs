@@ -57,39 +57,4 @@ public class Hand
 
         return (new (value, shape, soloTen, soloAce, blackjack, count, firstCard, secondCard), false);
     }
-
-    public (bool, decimal) EvaluateBlackjack(Hand dealer)
-    {
-        if (Blackjack && dealer.Blackjack)
-        {
-            return (true, 0);
-        }
-
-        if (Blackjack)
-        {
-            return (true, 1.5m);
-        }
-        
-        if (dealer.Blackjack)
-        {
-            return (true, -1);
-        }
-
-        return (false, 0);
-    }
-
-    public decimal EvaluateHand(Hand dealer, bool dealerBust)
-    {
-        if (dealerBust || dealer.Value < Value) 
-        {
-            return 1;
-        }
-
-        if (dealer.Value > Value)
-        {
-            return -1;
-        }
-
-        return 0;
-    }
 }
