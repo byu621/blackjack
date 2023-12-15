@@ -7,7 +7,7 @@ public class HandTest
     {
         Hand hand = new();
         Assert.Equal(0, hand.Value);
-        Assert.Equal(Shape.HARD, hand.Shape);
+        Assert.Equal(Shape.Hard, hand.Shape);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class HandTest
         (hand,_) = hand.Hit(new (1));
 
         Assert.Equal(21, hand.Value);
-        Assert.Equal(Shape.SOFT, hand.Shape);
+        Assert.Equal(Shape.Soft, hand.Shape);
         Assert.True(hand.Blackjack);
     }
     

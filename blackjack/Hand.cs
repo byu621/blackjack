@@ -34,9 +34,9 @@ public class Hand
 
     public (Hand, bool) Hit(Card card)
     {
-        int cardValue = card.Value == 1 && Shape == Shape.HARD && Value <= 10 ? 11 : card.Value;
+        int cardValue = card.Value == 1 && Shape == Shape.Hard && Value <= 10 ? 11 : card.Value;
         int value = Value + cardValue;
-        Shape shape = Shape == Shape.SOFT || cardValue == 11 ? Shape.SOFT : Shape.HARD;
+        Shape shape = Shape == Shape.Soft || cardValue == 11 ? Shape.Soft : Shape.Hard;
         bool soloTen = Value == 0 && card.Value == 10;
         bool soloAce = Value == 0 && card.Value == 1;
         bool blackjack = SoloTen && card.Value == 1 || SoloAce && card.Value == 10;
@@ -44,13 +44,13 @@ public class Hand
         Card? firstCard = Count == 0 ? card : FirstCard;
         Card? secondCard = Count == 1 ? card : SecondCard;
 
-        if (value > 21 && shape == Shape.SOFT)
+        if (value > 21 && shape == Shape.Soft)
         {
             value -= 10;
-            shape = Shape.HARD;
+            shape = Shape.Hard;
         }
 
-        if (value > 21 && shape == Shape.HARD)
+        if (value > 21 && shape == Shape.Hard)
         {
             return (new(), true);
         }

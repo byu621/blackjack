@@ -2,6 +2,5 @@
 
 public enum Action
 {
-    H, 
-    S, 
+    Hit, Stand, Double, Split 
 }
