@@ -41,48 +41,43 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
             if (action == Action.Double)
             {
                 total += PlayerDouble(player, dealer, shoe);
-                continue;
-            }
-
-            var playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
-
-            if (playerAfter.IsBust)
+            } else if (action == Action.Hit || action == Action.Stand || action == Action.Split)
             {
-                total -= bet;
-                continue;
-            }
-            
-            Hand dealerAfter = DealerAction(dealer, shoe);
-            if (dealerAfter.IsBust)
-            {
-                total += bet;
-                continue;
-            }
-
-            int compareTo = playerAfter.Value.CompareTo(dealerAfter.Value);
-            total += bet * compareTo;
+                total += PlayerAction(player, dealer, shoe);
+            } 
         }
 
         return (total, numHands);
     }
 
-    private Hand PlayerAction(Hand player, Card dealerUpCard, Shoe shoe)
+    private int PlayerAction(Hand player, Hand dealer, Shoe shoe)
     {
-        if (player.IsBust) return player;
-        if (player.Value == 21) return player;
-        
-        Action action = player.IsPair
-            ? Action.Split
-            : basicStrategy.GetAction(new(player.Shape, player.Value, dealerUpCard.Value));
-
-        if (action == Action.Stand) return player;
-        if (action == Action.Hit)
+        while (true)
         {
-            player = player.Hit(shoe.Pop());
-            return PlayerAction(player, dealerUpCard, shoe);
+            if (player.IsBust) break;
+            if (player.Value == 21) break;
+            if (player.IsPair) break;
+            Action action = basicStrategy.GetAction(new(player.Shape, player.Value, dealer.DealerUpCard.Value));
+            if (action == Action.Stand) break;
+            if (action == Action.Hit || action == Action.Double)
+            {
+                player = player.Hit(shoe.Pop());
+            }
         }
-        
-        return player;
+
+        if (player.IsBust)
+        {
+            return -bettingUnit;
+        }
+            
+        Hand dealerAfter = DealerAction(dealer, shoe);
+        if (dealerAfter.IsBust)
+        {
+            return bettingUnit;
+        }
+
+        int compareTo = player.Value.CompareTo(dealerAfter.Value);
+        return bettingUnit * compareTo;
     }
 
     private int PlayerDouble(Hand player, Hand dealer, Shoe shoe)
