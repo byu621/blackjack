@@ -14,7 +14,8 @@ public class BasicStrategy
     
     public BasicStrategy()
     {
-        Load();
+        Load("HardBasicStrategy.csv", Shape.Hard);
+        Load("SoftBasicStrategy.csv", Shape.Soft);
     }
 
     public Action GetAction(State state)
@@ -27,11 +28,10 @@ public class BasicStrategy
         return value;
     }
     
-    private void Load()
+    private void Load(string fileName, Shape shape)
     {
-        string[] lines = File.ReadAllLines("BasicStrategy.csv");
-        int[] dealerValues = lines[0].Substring(2).Split(",").Select(x => x == "A" ? 1 : int.Parse(x)).ToArray();
-        Shape shape = Shape.Hard;
+        string[] lines = File.ReadAllLines(fileName);
+        int[] dealerValues = lines[0][2..].Split(",").Select(x => x == "A" ? 1 : int.Parse(x)).ToArray();
         for (var i = 1; i < lines.Length; i++)
         {
             var line = lines[i];
