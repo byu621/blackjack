@@ -38,16 +38,14 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
                 ? Action.Split
                 : basicStrategy.GetAction(new(player.Shape, player.Value, dealer.DealerUpCard.Value));
 
-            Hand playerAfter;
             if (action == Action.Double)
             {
-                playerAfter = PlayerDouble(player, shoe);
-                bet *= 2;
-            } else
-            {
-                playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
+                total += PlayerDouble(player, dealer, shoe);
+                continue;
             }
-            
+
+            var playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
+
             if (playerAfter.IsBust)
             {
                 total -= bet;
@@ -87,10 +85,23 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
         return player;
     }
 
-    private Hand PlayerDouble(Hand player, Shoe shoe)
+    private int PlayerDouble(Hand player, Hand dealer, Shoe shoe)
     {
-        player = player.Hit(shoe.Pop());
-        return player;
+        Hand playerAfter = player.Hit(shoe.Pop());
+        
+        if (playerAfter.IsBust)
+        {
+            throw new Exception("Player busted after doubling");
+        }
+            
+        Hand dealerAfter = DealerAction(dealer, shoe);
+        if (dealerAfter.IsBust)
+        {
+            return bettingUnit * 2;
+        }
+
+        int compareTo = playerAfter.Value.CompareTo(dealerAfter.Value);
+        return bettingUnit * 2 * compareTo;
     }
 
     private Hand DealerAction(Hand dealer, Shoe shoe)
