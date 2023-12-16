@@ -6,8 +6,12 @@ internal static class Program
     {
         BasicStrategy basicStrategy = new BasicStrategy();
         
-        // int numDecksInShoe = 6;
-        // int numShoe = 1_000;
-        // int penetration = 80;
+        int numDecksInShoe = 6;
+        int penetration = 80;
+        int bettingUnit = 10;
+        Simulation simulation = new(numDecksInShoe, penetration, bettingUnit);
+        int profit = simulation.Simulate();
+
+        Console.WriteLine(profit);
     }
 }
