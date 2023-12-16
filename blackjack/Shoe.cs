@@ -22,7 +22,7 @@ public class Shoe
         _cards = new Stack<Card>(array);
     }
 
-    private Card Pop()
+    public Card Pop()
     {
         Card card = _cards.Pop();
         return card;

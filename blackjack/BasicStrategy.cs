@@ -24,7 +24,7 @@ public class BasicStrategy
     {
         if (!_dict.TryGetValue(state, out Action value))
         {
-            throw new Exception("Invalid state");
+            throw new Exception($"Invalid state: {state.Shape},{state.Value}");
         }
 
         return value;

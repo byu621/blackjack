@@ -14,10 +14,46 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
             if (player.Blackjack || dealer.Blackjack)
             {
                 total += EvaluateBlackjack(player, dealer);
+                continue;
             }
+
+            Hand playerAfter = PlayerAction(player, dealer.DealerUpCard);
+            if (playerAfter.IsBust)
+            {
+                total -= bettingUnit;
+                continue;
+            }
+            
+            Hand dealerAfter = DealerAction(dealer, shoe);
+            if (dealerAfter.IsBust)
+            {
+                total += bettingUnit;
+                continue;
+            }
+
+            int compareTo = playerAfter.Value.CompareTo(dealerAfter.Value);
+            total += bettingUnit * compareTo;
         }
 
         return total;
+    }
+
+    private Hand PlayerAction(Hand player, Card dealerUpCard)
+    {
+        Action action = player.IsPair
+            ? Action.Split
+            : basicStrategy.GetAction(new(player.Shape, player.Value, dealerUpCard.Value));
+        return player;
+    }
+
+    private Hand DealerAction(Hand dealer, Shoe shoe)
+    {
+        while (!dealer.IsBust && dealer.Value < 17)
+        {
+            dealer = dealer.Hit(shoe.Pop());
+        }
+
+        return dealer;
     }
     
     private int EvaluateBlackjack(Hand player, Hand dealer)
