@@ -6,7 +6,7 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
     {
         int total = 0;
         Shoe shoe = new(numDecksInShoe);
-        while (shoe.isLive(penetration))
+        while (shoe.IsLive(penetration))
         {
             Hand dealer = shoe.Deal();
             Hand player = shoe.Deal();

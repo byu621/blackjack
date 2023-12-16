@@ -2,12 +2,13 @@ namespace blackjack;
 
 public class Shoe 
 {
-    private readonly Stack<Card> cards = new();
-    private readonly int numDecks;
+    private readonly Stack<Card> _cards;
+    private readonly int _numDecks;
 
     public Shoe(int numDecks)
     {
-        Card[] array = new Card[CardCount(numDecks)];
+        _numDecks = numDecks;
+        Card[] array = new Card[CardCount()];
         for (int i = 0; i < array.Length; i++)
         {
             int iMod13 = i % 13 + 1;
@@ -18,44 +19,32 @@ public class Shoe
         Random random = new Random();
         random.Shuffle(array);
 
-        cards = new Stack<Card>(array);
-        this.numDecks = numDecks;
+        _cards = new Stack<Card>(array);
     }
 
-    public Card Pop()
+    private Card Pop()
     {
-        Card card = cards.Pop();
+        Card card = _cards.Pop();
         return card;
     }
 
     public Hand Deal()
     {
         Hand hand = new Hand();
-        (hand, _) = hand.Hit(Pop());
-        (hand, _) = hand.Hit(Pop());
+        hand = hand.Hit(Pop());
+        hand = hand.Hit(Pop());
         return hand;
     }
 
-    public (Hand, bool) DealerHit(Hand dealer)
+    private int CardCount()
     {
-        bool dealerBust = false;
-        while (!dealerBust && dealer.Value < 17)
-        {
-            (dealer, dealerBust) = dealer.Hit(Pop());
-        }
-
-        return (dealer, dealerBust);
+        return _numDecks * 13 * 4;
     }
 
-    private int CardCount(int numDecks)
+    public bool IsLive(int penetration)
     {
-        return numDecks * 13 * 4;
-    }
-
-    public bool isLive(int penetration)
-    {
-        int cardCount = CardCount(numDecks);
-        int currentCardCount = cards.Count;
+        int cardCount = CardCount();
+        int currentCardCount = _cards.Count;
         int cardCountOutOfShoe = cardCount - currentCardCount;
         int percentage = (int)Math.Round((double)(cardCountOutOfShoe * 100) / cardCount);
         return percentage < penetration;
