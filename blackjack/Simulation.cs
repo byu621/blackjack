@@ -17,7 +17,7 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
                 continue;
             }
 
-            Hand playerAfter = PlayerAction(player, dealer.DealerUpCard);
+            Hand playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
             if (playerAfter.IsBust)
             {
                 total -= bettingUnit;
@@ -38,11 +38,22 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
         return total;
     }
 
-    private Hand PlayerAction(Hand player, Card dealerUpCard)
+    private Hand PlayerAction(Hand player, Card dealerUpCard, Shoe shoe)
     {
+        if (player.IsBust) return player;
+        if (player.Value == 21) return player;
+        
         Action action = player.IsPair
             ? Action.Split
             : basicStrategy.GetAction(new(player.Shape, player.Value, dealerUpCard.Value));
+
+        if (action == Action.Stand) return player;
+        if (action == Action.Hit)
+        {
+            player = player.Hit(shoe.Pop());
+            return PlayerAction(player, dealerUpCard, shoe);
+        }
+        
         return player;
     }
 
