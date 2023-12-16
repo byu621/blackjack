@@ -9,7 +9,7 @@ internal static class Program
         int numDecksInShoe = 6;
         int penetration = 80;
         int bettingUnit = 10;
-        Simulation simulation = new(numDecksInShoe, penetration, bettingUnit);
+        Simulation simulation = new(numDecksInShoe, penetration, bettingUnit, basicStrategy);
         int profit = simulation.Simulate();
 
         Console.WriteLine(profit);

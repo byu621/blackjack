@@ -1,6 +1,6 @@
 ﻿namespace blackjack;
 
-public class Simulation(int numDecksInShoe, int penetration, int bettingUnit)
+public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, BasicStrategy basicStrategy)
 {
     public int Simulate()
     {
