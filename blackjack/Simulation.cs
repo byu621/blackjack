@@ -2,12 +2,28 @@
 
 public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, BasicStrategy basicStrategy)
 {
-    public int Simulate()
+    public (int,int) Simulate(int numShoe)
     {
         int total = 0;
+        int numHands = 0;
+        for (int i = 0; i < numShoe; i++)
+        {
+             (int subTotal, int subNumHands) = Simulate();
+             total += subTotal;
+             numHands += subNumHands;
+        }
+
+        return (total, numHands);
+    }
+    
+    private (int,int) Simulate()
+    {
+        int total = 0;
+        int numHands = 0;
         Shoe shoe = new(numDecksInShoe);
         while (shoe.IsLive(penetration))
         {
+            numHands++;
             Hand dealer = shoe.Deal();
             Hand player = shoe.Deal();
 
@@ -35,7 +51,7 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
             total += bettingUnit * compareTo;
         }
 
-        return total;
+        return (total, numHands);
     }
 
     private Hand PlayerAction(Hand player, Card dealerUpCard, Shoe shoe)
