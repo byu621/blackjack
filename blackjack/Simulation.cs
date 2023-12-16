@@ -24,6 +24,7 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
         while (shoe.IsLive(penetration))
         {
             numHands++;
+            int bet = bettingUnit;
             Hand dealer = shoe.Deal();
             Hand player = shoe.Deal();
 
@@ -33,22 +34,35 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
                 continue;
             }
 
-            Hand playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
+            Action action = player.IsPair
+                ? Action.Split
+                : basicStrategy.GetAction(new(player.Shape, player.Value, dealer.DealerUpCard.Value));
+
+            Hand playerAfter;
+            if (action == Action.Double)
+            {
+                playerAfter = PlayerDouble(player, shoe);
+                bet *= 2;
+            } else
+            {
+                playerAfter = PlayerAction(player, dealer.DealerUpCard, shoe);
+            }
+            
             if (playerAfter.IsBust)
             {
-                total -= bettingUnit;
+                total -= bet;
                 continue;
             }
             
             Hand dealerAfter = DealerAction(dealer, shoe);
             if (dealerAfter.IsBust)
             {
-                total += bettingUnit;
+                total += bet;
                 continue;
             }
 
             int compareTo = playerAfter.Value.CompareTo(dealerAfter.Value);
-            total += bettingUnit * compareTo;
+            total += bet * compareTo;
         }
 
         return (total, numHands);
@@ -70,6 +84,12 @@ public class Simulation(int numDecksInShoe, int penetration, int bettingUnit, Ba
             return PlayerAction(player, dealerUpCard, shoe);
         }
         
+        return player;
+    }
+
+    private Hand PlayerDouble(Hand player, Shoe shoe)
+    {
+        player = player.Hit(shoe.Pop());
         return player;
     }
 
